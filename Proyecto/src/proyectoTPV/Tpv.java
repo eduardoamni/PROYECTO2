@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package proyectoTPV;
+
+import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
 
 /**
  *
@@ -17,6 +22,8 @@ public class Tpv extends javax.swing.JFrame {
      */
     public Tpv() {
         initComponents();
+        conexion = JDBC.conectarBD();
+
     }
 
     /**
@@ -35,13 +42,14 @@ public class Tpv extends javax.swing.JFrame {
         btnPlatos = new javax.swing.JButton();
         btnTapas = new javax.swing.JButton();
         btnPostres = new javax.swing.JButton();
-        btnDescuentos = new javax.swing.JButton();
+        btnCafes = new javax.swing.JButton();
         panSubAlimentos = new javax.swing.JPanel();
         panMenu = new javax.swing.JPanel();
         lblHora = new javax.swing.JLabel();
         btnOpciones = new javax.swing.JButton();
         btnOperaciones = new javax.swing.JButton();
         btnMain = new javax.swing.JButton();
+        btnPersonal = new javax.swing.JButton();
         btn0 = new javax.swing.JButton();
         btn1 = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
@@ -59,14 +67,14 @@ public class Tpv extends javax.swing.JFrame {
         btnTicket = new javax.swing.JButton();
         btnCobrar = new javax.swing.JButton();
         panLista = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lstLista = new javax.swing.JList();
-        lblTotal = new javax.swing.JLabel();
         lblSTotal = new javax.swing.JLabel();
-        tbtnTurno = new javax.swing.JToggleButton();
+        lblTotal = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btnPost = new javax.swing.JButton();
         btnAnt = new javax.swing.JButton();
         btnNCli = new javax.swing.JButton();
+        cbxCamarero = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1280, 791));
@@ -81,28 +89,136 @@ public class Tpv extends javax.swing.JFrame {
         panAlimentos.setOpaque(false);
 
         btnRefrescos.setBackground(new java.awt.Color(36, 29, 29));
+        btnRefrescos.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnRefrescos.setForeground(new java.awt.Color(204, 204, 204));
+        btnRefrescos.setText("REFRESCOS");
         btnRefrescos.setContentAreaFilled(false);
         btnRefrescos.setOpaque(true);
+        btnRefrescos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnRefrescos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnRefrescos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
         btnLicores.setBackground(new java.awt.Color(36, 29, 29));
+        btnLicores.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnLicores.setForeground(new java.awt.Color(204, 204, 204));
+        btnLicores.setText("LICORES");
         btnLicores.setContentAreaFilled(false);
         btnLicores.setOpaque(true);
+        btnLicores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnLicores.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnLicores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
         btnPlatos.setBackground(new java.awt.Color(36, 29, 29));
+        btnPlatos.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnPlatos.setForeground(new java.awt.Color(204, 204, 204));
+        btnPlatos.setText("PLATOS");
         btnPlatos.setContentAreaFilled(false);
         btnPlatos.setOpaque(true);
+        btnPlatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnPlatos.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnPlatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
         btnTapas.setBackground(new java.awt.Color(36, 29, 29));
+        btnTapas.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnTapas.setForeground(new java.awt.Color(204, 204, 204));
+        btnTapas.setText("TAPAS");
         btnTapas.setContentAreaFilled(false);
         btnTapas.setOpaque(true);
+        btnTapas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnTapas.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnTapas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
         btnPostres.setBackground(new java.awt.Color(36, 29, 29));
+        btnPostres.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnPostres.setForeground(new java.awt.Color(204, 204, 204));
+        btnPostres.setText("POSTRES");
         btnPostres.setContentAreaFilled(false);
         btnPostres.setOpaque(true);
+        btnPostres.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnPostres.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnPostres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
-        btnDescuentos.setBackground(new java.awt.Color(36, 29, 29));
-        btnDescuentos.setContentAreaFilled(false);
-        btnDescuentos.setOpaque(true);
+        btnCafes.setBackground(new java.awt.Color(36, 29, 29));
+        btnCafes.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnCafes.setForeground(new java.awt.Color(204, 204, 204));
+        btnCafes.setText("CAFÉS");
+        btnCafes.setContentAreaFilled(false);
+        btnCafes.setOpaque(true);
+        btnCafes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnCafes.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
+        btnCafes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mSub(evt);
+            }
+        });
 
         javax.swing.GroupLayout panAlimentosLayout = new javax.swing.GroupLayout(panAlimentos);
         panAlimentos.setLayout(panAlimentosLayout);
@@ -122,7 +238,7 @@ public class Tpv extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPostres, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDescuentos, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnCafes, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panAlimentosLayout.setVerticalGroup(
@@ -136,9 +252,11 @@ public class Tpv extends javax.swing.JFrame {
                 .addGroup(panAlimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnPlatos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPostres, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDescuentos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnCafes, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        panSubAlimentos.setOpaque(false);
 
         javax.swing.GroupLayout panSubAlimentosLayout = new javax.swing.GroupLayout(panSubAlimentos);
         panSubAlimentos.setLayout(panSubAlimentosLayout);
@@ -159,21 +277,62 @@ public class Tpv extends javax.swing.JFrame {
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblHora.setText("HORA");
 
+        btnOpciones.setBackground(new java.awt.Color(36, 29, 29));
         btnOpciones.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         btnOpciones.setForeground(new java.awt.Color(204, 204, 204));
         btnOpciones.setText("Opciones");
         btnOpciones.setContentAreaFilled(false);
+        btnOpciones.setOpaque(true);
+        btnOpciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnOpciones.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
 
+        btnOperaciones.setBackground(new java.awt.Color(36, 29, 29));
         btnOperaciones.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         btnOperaciones.setForeground(new java.awt.Color(204, 204, 204));
         btnOperaciones.setText("Operaciones");
         btnOperaciones.setContentAreaFilled(false);
+        btnOperaciones.setOpaque(true);
+        btnOperaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnOperaciones.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
 
         btnMain.setBackground(new java.awt.Color(74, 129, 205));
         btnMain.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnMain.setForeground(new java.awt.Color(204, 204, 204));
         btnMain.setContentAreaFilled(false);
         btnMain.setOpaque(true);
+
+        btnPersonal.setBackground(new java.awt.Color(36, 29, 29));
+        btnPersonal.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
+        btnPersonal.setForeground(new java.awt.Color(204, 204, 204));
+        btnPersonal.setText("Personal");
+        btnPersonal.setContentAreaFilled(false);
+        btnPersonal.setOpaque(true);
+        btnPersonal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnPersonal.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+        });
 
         javax.swing.GroupLayout panMenuLayout = new javax.swing.GroupLayout(panMenu);
         panMenu.setLayout(panMenuLayout);
@@ -183,8 +342,10 @@ public class Tpv extends javax.swing.JFrame {
                 .addComponent(btnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(86, 86, 86)
                 .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
-                .addComponent(btnOperaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(btnOperaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btnPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -192,9 +353,11 @@ public class Tpv extends javax.swing.JFrame {
         panMenuLayout.setVerticalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnOperaciones, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-            .addComponent(lblHora, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblHora, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+            .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addComponent(btnOpciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                .addComponent(btnOperaciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPersonal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btn0.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
@@ -270,7 +433,13 @@ public class Tpv extends javax.swing.JFrame {
         panLista.setAlignmentY(0.0F);
         panLista.setPreferredSize(new java.awt.Dimension(240, 351));
 
-        jScrollPane1.setViewportView(lstLista);
+        lblSTotal.setBackground(new java.awt.Color(74, 129, 205));
+        lblSTotal.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        lblSTotal.setForeground(new java.awt.Color(255, 255, 255));
+        lblSTotal.setText(" TOTAL");
+        lblSTotal.setToolTipText("");
+        lblSTotal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        lblSTotal.setOpaque(true);
 
         lblTotal.setBackground(new java.awt.Color(74, 129, 205));
         lblTotal.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
@@ -280,37 +449,48 @@ public class Tpv extends javax.swing.JFrame {
         lblTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         lblTotal.setOpaque(true);
 
-        lblSTotal.setBackground(new java.awt.Color(74, 129, 205));
-        lblSTotal.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
-        lblSTotal.setForeground(new java.awt.Color(255, 255, 255));
-        lblSTotal.setText(" TOTAL");
-        lblSTotal.setToolTipText("");
-        lblSTotal.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        lblSTotal.setOpaque(true);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Cod", "Producto", "Cantidad", "Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable1.setSelectionBackground(new java.awt.Color(74, 129, 205));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout panListaLayout = new javax.swing.GroupLayout(panLista);
         panLista.setLayout(panListaLayout);
         panListaLayout.setHorizontalGroup(
             panListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2)
             .addGroup(panListaLayout.createSequentialGroup()
-                .addComponent(lblSTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblSTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         panListaLayout.setVerticalGroup(
             panListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panListaLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblSTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
-                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(panListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblSTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                    .addComponent(lblTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        tbtnTurno.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        tbtnTurno.setText("TURNO");
-        tbtnTurno.setFocusPainted(false);
 
         btnPost.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnPost.setText(">");
@@ -324,6 +504,8 @@ public class Tpv extends javax.swing.JFrame {
         btnNCli.setText("NUEVO CLIENTE");
         btnNCli.setFocusPainted(false);
 
+        cbxCamarero.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+
         javax.swing.GroupLayout jPFondoLayout = new javax.swing.GroupLayout(jPFondo);
         jPFondo.setLayout(jPFondoLayout);
         jPFondoLayout.setHorizontalGroup(
@@ -336,7 +518,7 @@ public class Tpv extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPFondoLayout.createSequentialGroup()
-                        .addComponent(tbtnTurno, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbxCamarero, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnNCli, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -388,10 +570,10 @@ public class Tpv extends javax.swing.JFrame {
                         .addComponent(panSubAlimentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tbtnTurno, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                             .addComponent(btnPost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAnt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnNCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnNCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbxCamarero))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -405,8 +587,9 @@ public class Tpv extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(btnMC, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -423,7 +606,8 @@ public class Tpv extends javax.swing.JFrame {
                                 .addComponent(btnComa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         getContentPane().add(jPFondo);
@@ -431,6 +615,91 @@ public class Tpv extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void fondoAzul(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoAzul
+        JButton boton = (JButton) evt.getSource();
+        boton.setBackground(new java.awt.Color(74, 129, 205));
+    }//GEN-LAST:event_fondoAzul
+
+    private void fondoNormal(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoNormal
+        JButton boton = (JButton) evt.getSource();
+        boton.setBackground(new java.awt.Color(36, 29, 29));
+    }//GEN-LAST:event_fondoNormal
+
+    private void mSub(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSub
+        
+        
+        panSubAlimentos.removeAll();
+        panSubAlimentos.setVisible(false);
+        panSubAlimentos.setVisible(true);
+        
+        JButton boton = (JButton) evt.getSource();
+        String tipo;
+        switch (boton.getText().toLowerCase()) {
+            case "refrescos":
+                tipo = "refrescos";
+                break;
+            case "licores":
+                tipo = "licores";
+                break;
+            case "tapas":
+                tipo = "tapas";
+                break;
+            case "platos":
+                tipo = "platos";
+                break;
+            case "postres":
+                tipo = "postres";
+                break;
+            case "cafés":
+                tipo = "cafes";
+                break;
+            default:
+                    tipo="";
+                break;
+        }
+        st = JDBC.crearSentencia(conexion);
+        
+        //COUNT PARA CREAR LOS BOTONES
+        String a = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '"+tipo+"';";
+        rs = JDBC.crearResultado(st, a);
+        int count = 0;
+        try {
+            if(rs.next())
+             count = rs.getInt("count");
+        } catch (SQLException ex) {
+            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        btnSMnu = new javax.swing.JButton[count];
+        int dBotones = 0;
+        String q = "SELECT * FROM Producto WHERE tipo = '"+tipo+"';";
+        rs = JDBC.crearResultado(st, q);
+        try {
+            while (rs.next()) {
+                btnSMnu[dBotones]= new javax.swing.JButton();
+                panSubAlimentos.add(btnSMnu[dBotones]);
+                btnSMnu[dBotones].setBounds(110*dBotones+6*dBotones, 0, 110, 110);
+                btnSMnu[dBotones].setText(rs.getString("nombre"));
+                btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));        
+                btnSMnu[dBotones].setContentAreaFilled(false);
+                btnSMnu[dBotones].setOpaque(true);
+                
+                //EVENTO
+                btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    }
+                });
+                
+                dBotones++;
+            }
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_mSub
+
+    
 
     /**
      * @param args the command line arguments
@@ -479,9 +748,9 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JButton btn8;
     private javax.swing.JButton btn9;
     private javax.swing.JButton btnAnt;
+    private javax.swing.JButton btnCafes;
     private javax.swing.JButton btnCobrar;
     private javax.swing.JButton btnComa;
-    private javax.swing.JButton btnDescuentos;
     private javax.swing.JButton btnEl;
     private javax.swing.JButton btnLicores;
     private javax.swing.JButton btnMC;
@@ -490,22 +759,28 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JButton btnNCli;
     private javax.swing.JButton btnOpciones;
     private javax.swing.JButton btnOperaciones;
+    private javax.swing.JButton btnPersonal;
     private javax.swing.JButton btnPlatos;
     private javax.swing.JButton btnPost;
     private javax.swing.JButton btnPostres;
     private javax.swing.JButton btnRefrescos;
     private javax.swing.JButton btnTapas;
     private javax.swing.JButton btnTicket;
+    private javax.swing.JComboBox cbxCamarero;
     private javax.swing.JPanel jPFondo;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblHora;
     private javax.swing.JLabel lblSTotal;
     private javax.swing.JLabel lblTotal;
-    private javax.swing.JList lstLista;
     private javax.swing.JPanel panAlimentos;
     private javax.swing.JPanel panLista;
     private javax.swing.JPanel panMenu;
     private javax.swing.JPanel panSubAlimentos;
-    private javax.swing.JToggleButton tbtnTurno;
     // End of variables declaration//GEN-END:variables
+    java.sql.Statement st;
+    java.sql.ResultSet rs;
+    java.sql.Connection conexion;
+    javax.swing.JButton [] btnSMnu;
+
 }
