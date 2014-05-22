@@ -6,9 +6,15 @@
 package proyectoTPV;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 
 /**
@@ -17,12 +23,24 @@ import javax.swing.JButton;
  */
 public class Tpv extends javax.swing.JFrame {
 
+    public class Liste implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            GregorianCalendar c = new GregorianCalendar();
+            SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
+            lblHora.setText(f.format(c.getTime()));
+        }
+    }
+    
     /**
      * Creates new form Tpv
      */
     public Tpv() {
         initComponents();
         conexion = JDBC.conectarBD();
+        hora = new javax.swing.Timer(1000, new Liste());
+        hora.start();
+        verCamareros();
 
     }
 
@@ -275,7 +293,6 @@ public class Tpv extends javax.swing.JFrame {
         lblHora.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         lblHora.setForeground(new java.awt.Color(204, 204, 204));
         lblHora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblHora.setText("HORA");
 
         btnOpciones.setBackground(new java.awt.Color(36, 29, 29));
         btnOpciones.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
@@ -616,6 +633,18 @@ public class Tpv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void verCamareros(){
+        st = JDBC.crearSentencia(conexion);
+        rs = JDBC.crearResultado(st, "SELECT nombre_c FROM Camarero;");
+        try {
+            while(rs.next()){
+                cbxCamarero.addItem(rs.getString("nombre_c"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     private void fondoAzul(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoAzul
         JButton boton = (JButton) evt.getSource();
         boton.setBackground(new java.awt.Color(74, 129, 205));
@@ -661,8 +690,8 @@ public class Tpv extends javax.swing.JFrame {
         st = JDBC.crearSentencia(conexion);
         
         //COUNT PARA CREAR LOS BOTONES
-        String a = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '"+tipo+"';";
-        rs = JDBC.crearResultado(st, a);
+        String c = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '"+tipo+"';";
+        rs = JDBC.crearResultado(st, c);
         int count = 0;
         try {
             if(rs.next())
@@ -675,15 +704,22 @@ public class Tpv extends javax.swing.JFrame {
         int dBotones = 0;
         String q = "SELECT * FROM Producto WHERE tipo = '"+tipo+"';";
         rs = JDBC.crearResultado(st, q);
+        int h = 0;
+        int hB = 0;
         try {
             while (rs.next()) {
+                if(hB==6){
+                    h+=120+8;
+                    hB=0;
+                }
                 btnSMnu[dBotones]= new javax.swing.JButton();
                 panSubAlimentos.add(btnSMnu[dBotones]);
-                btnSMnu[dBotones].setBounds(110*dBotones+6*dBotones, 0, 110, 110);
+                btnSMnu[dBotones].setBounds(120*hB+8*hB, h, 120, 120);
                 btnSMnu[dBotones].setText(rs.getString("nombre"));
                 btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));        
                 btnSMnu[dBotones].setContentAreaFilled(false);
                 btnSMnu[dBotones].setOpaque(true);
+                
                 
                 //EVENTO
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
@@ -691,6 +727,11 @@ public class Tpv extends javax.swing.JFrame {
                     }
                 });
                 
+                
+                
+                
+                System.out.println(hB+""+dBotones);
+                hB++;
                 dBotones++;
             }
             rs.close();
@@ -782,5 +823,6 @@ public class Tpv extends javax.swing.JFrame {
     java.sql.ResultSet rs;
     java.sql.Connection conexion;
     javax.swing.JButton [] btnSMnu;
+    javax.swing.Timer hora;
 
 }
