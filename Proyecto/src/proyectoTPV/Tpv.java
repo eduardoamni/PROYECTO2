@@ -46,7 +46,7 @@ public class Tpv extends javax.swing.JFrame {
         verCamareros();
         arrayModelos.add(new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "Cod", "Producto", "Cantidad", "Total"
+                    "Cod", "Producto", "Cantidad", "Precio", "Total"
                 }));
         jTable1.setModel(arrayModelos.get(0));
     }
@@ -391,38 +391,83 @@ public class Tpv extends javax.swing.JFrame {
         btn1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn1.setText("1");
         btn1.setFocusPainted(false);
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn4.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn4.setText("4");
         btn4.setFocusPainted(false);
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn7.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn7.setText("7");
         btn7.setFocusPainted(false);
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn8.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn8.setText("8");
         btn8.setFocusPainted(false);
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn5.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn5.setText("5");
         btn5.setFocusPainted(false);
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn2.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn2.setText("2");
         btn2.setFocusPainted(false);
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn9.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn9.setText("9");
         btn9.setFocusPainted(false);
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn6.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn6.setText("6");
         btn6.setFocusPainted(false);
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn3.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn3.setText("3");
         btn3.setFocusPainted(false);
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btnComa.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnComa.setText(",");
@@ -436,6 +481,11 @@ public class Tpv extends javax.swing.JFrame {
         btnMC.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnMC.setText("MC");
         btnMC.setFocusPainted(false);
+        btnMC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMCActionPerformed(evt);
+            }
+        });
 
         btnMP.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnMP.setText("MP");
@@ -519,10 +569,20 @@ public class Tpv extends javax.swing.JFrame {
         btnPost.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnPost.setText(">");
         btnPost.setFocusPainted(false);
+        btnPost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mAlante(evt);
+            }
+        });
 
         btnAnt.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnAnt.setText("<");
         btnAnt.setFocusPainted(false);
+        btnAnt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mAtras(evt);
+            }
+        });
 
         btnNCli.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnNCli.setText("NUEVO CLIENTE");
@@ -733,13 +793,9 @@ public class Tpv extends javax.swing.JFrame {
                 btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));
                 btnSMnu[dBotones].setContentAreaFilled(false);
                 btnSMnu[dBotones].setOpaque(true);
-                
-                
+
                 //construimos los objetos productos
-                aProd[dBotones]=new Productos();
-                aProd[dBotones].setCod(rs.getInt("codigo"));
-                aProd[dBotones].setNombre(  btnSMnu[dBotones].getText());
-                aProd[dBotones].setPrecio(rs.getDouble("precio"));
+                aProd[dBotones] = new Productos(rs.getInt("codigo"),btnSMnu[dBotones].getText(), rs.getString("tipo"), rs.getInt("cantidad"),rs.getDouble("precio"));
                 //EVENTO
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -758,29 +814,48 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_mSub
 
     private void evtBoton(java.awt.event.ActionEvent evt) {
-        double total=0;
-        double subtotal=0;
+        
+        m = (DefaultTableModel) jTable1.getModel();
+        
+                        addM1P= true;
         javax.swing.JButton botonPulsado = (javax.swing.JButton) evt.getSource();
-         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
         for (int i = 0; i < count; i++) {
             if (botonPulsado.equals(btnSMnu[i])) {
-               
+                //coger nombre en el modelo
+                for(int n = 0; n<m.getRowCount(); n++){
+                    String nombre = m.getValueAt(n, 1).toString();
+                    cant = (Integer)Integer.parseInt(m.getValueAt(n, 2).toString());
+                    
+                    System.out.println(cant);
+                    if(aProd[i].getNombre().equals(nombre)){
+                        cant+=1;
+                        m.setValueAt(cant, n, 2);
+                        m.setValueAt((Double)Double.parseDouble(m.getValueAt(n, 3).toString())*cant, n, 4);
+                        addM1P= false;
+            verTotal();            
+        
+                    }
+                        }
+                if(addM1P){
                 m.addRow(new Object[]{
-                    aProd[i].getCod(), aProd[i].getNombre(), 1, aProd[i].getPrecio()}
+                    aProd[i].getCod(), aProd[i].getNombre(), cantidad, (aProd[i].getPrecio()), aProd[i].getPrecio()*cantidad}
                 );
-
+                }
             }
         }
-        
-        
-        
+        verTotal();
+    }
+
+    
+    
+    private void verTotal() {
+        double total = 0;
+        double subtotal = 0;
         for (int i = 0; i < m.getRowCount(); i++) {
-			subtotal = Double.parseDouble(m.getValueAt(i, 3).toString());
-			total = total + subtotal;
-		}
-		
-        //m.getValueAt( 4);
-        lblTotal.setText(total+"");
+            subtotal = Double.parseDouble(m.getValueAt(i, 4).toString());
+            total = total + subtotal;
+        }
+        lblTotal.setText(total + "");
     }
 
 
@@ -788,13 +863,64 @@ public class Tpv extends javax.swing.JFrame {
         int ultPos = arrayModelos.size();
         arrayModelos.add(new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "Cod", "Producto", "Cantidad", "Total"
+                    "Cod", "Producto", "Cantidad", "Precio","Total"
                 }));
 
         jTable1.setModel(arrayModelos.get(ultPos));
-    lblTotal.setText("0");
+        lblTotal.setText("0");
         //System.out.println(arrayModelos.size()+""+ultPos);
     }//GEN-LAST:event_adCli
+
+    private void mAtras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAtras
+        int am = arrayModelos.size();
+        for (int i = 0; i < am; i++) {
+            try {
+                if (jTable1.getModel().equals(arrayModelos.get(i))) {
+                    jTable1.setModel(arrayModelos.get(i - 1));
+                    
+                    m = (DefaultTableModel) jTable1.getModel();
+                    verTotal();
+                }
+            } catch (Exception e) {
+            }
+        }
+
+    }//GEN-LAST:event_mAtras
+
+    private void mAlante(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAlante
+        int am = arrayModelos.size();
+        for (int i = 0; i < am; i++) {
+            try {
+                if (jTable1.getModel().equals(arrayModelos.get(i))) {
+                    jTable1.setModel(arrayModelos.get(i + 1));
+                    
+                    m = (DefaultTableModel) jTable1.getModel();
+                    verTotal();
+                }
+            } catch (Exception e) {
+            }
+        }
+     }//GEN-LAST:event_mAlante
+
+    private void btnMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMCActionPerformed
+      ultimoC = true;    
+    }//GEN-LAST:event_btnMCActionPerformed
+
+    private void numero(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numero
+       JButton boton = (JButton)evt.getSource();
+       double boton1 = (Double)Double.parseDouble(boton.getText());
+       //TENGO QUE COGER EL PRECIO DE ALGUNA MANERA EN LA BDD
+       if(ultimoC){
+           double total = (Double)(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3))*(boton1);
+           
+           jTable1.getModel().setValueAt(boton.getText(), jTable1.getSelectedRow(), 2);
+           jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
+           
+           
+            m = (DefaultTableModel) jTable1.getModel();
+                    verTotal();
+       }
+    }//GEN-LAST:event_numero
 
     /**
      * @param args the command line arguments
@@ -878,9 +1004,13 @@ public class Tpv extends javax.swing.JFrame {
     java.sql.Connection conexion;
     public int count = 0;
     javax.swing.JButton[] btnSMnu;
-    public Productos [] aProd;
+    public Productos[] aProd;
     javax.swing.Timer hora;
-
+    DefaultTableModel m;
     ArrayList<javax.swing.table.DefaultTableModel> arrayModelos = new ArrayList();
+    int cantidad = 1;
+    boolean ultimoC;
+    boolean addM1P= true;
+    int cant;
 
 }
