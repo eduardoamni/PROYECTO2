@@ -10,12 +10,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -23,7 +25,8 @@ import javax.swing.JButton;
  */
 public class Tpv extends javax.swing.JFrame {
 
-    public class Liste implements ActionListener{
+    public class Liste implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent ae) {
             GregorianCalendar c = new GregorianCalendar();
@@ -31,7 +34,7 @@ public class Tpv extends javax.swing.JFrame {
             lblHora.setText(f.format(c.getTime()));
         }
     }
-    
+
     /**
      * Creates new form Tpv
      */
@@ -41,7 +44,11 @@ public class Tpv extends javax.swing.JFrame {
         hora = new javax.swing.Timer(1000, new Liste());
         hora.start();
         verCamareros();
-
+        arrayModelos.add(new DefaultTableModel(new Object[][]{},
+                new String[]{
+                    "Cod", "Producto", "Cantidad", "Total"
+                }));
+        jTable1.setModel(arrayModelos.get(0));
     }
 
     /**
@@ -520,6 +527,11 @@ public class Tpv extends javax.swing.JFrame {
         btnNCli.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnNCli.setText("NUEVO CLIENTE");
         btnNCli.setFocusPainted(false);
+        btnNCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                adCli(evt);
+            }
+        });
 
         cbxCamarero.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
 
@@ -633,18 +645,18 @@ public class Tpv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void verCamareros(){
+    private void verCamareros() {
         st = JDBC.crearSentencia(conexion);
         rs = JDBC.crearResultado(st, "SELECT nombre_c FROM Camarero;");
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 cbxCamarero.addItem(rs.getString("nombre_c"));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private void fondoAzul(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoAzul
         JButton boton = (JButton) evt.getSource();
         boton.setBackground(new java.awt.Color(74, 129, 205));
@@ -656,12 +668,11 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_fondoNormal
 
     private void mSub(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSub
-        
-        
+
         panSubAlimentos.removeAll();
         panSubAlimentos.setVisible(false);
         panSubAlimentos.setVisible(true);
-        
+
         JButton boton = (JButton) evt.getSource();
         String tipo;
         switch (boton.getText().toLowerCase()) {
@@ -684,53 +695,59 @@ public class Tpv extends javax.swing.JFrame {
                 tipo = "cafes";
                 break;
             default:
-                    tipo="";
+                tipo = "";
                 break;
         }
         st = JDBC.crearSentencia(conexion);
-        
+
         //COUNT PARA CREAR LOS BOTONES
-        String c = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '"+tipo+"';";
+        String c = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '" + tipo + "';";
         rs = JDBC.crearResultado(st, c);
-        int count = 0;
+
         try {
-            if(rs.next())
-             count = rs.getInt("count");
+            if (rs.next()) {
+                count = rs.getInt("count");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         btnSMnu = new javax.swing.JButton[count];
+        aProd = new Productos[count];
         int dBotones = 0;
-        String q = "SELECT * FROM Producto WHERE tipo = '"+tipo+"';";
+        String q = "SELECT * FROM Producto WHERE tipo = '" + tipo + "';";
         rs = JDBC.crearResultado(st, q);
         int h = 0;
         int hB = 0;
         try {
             while (rs.next()) {
-                if(hB==6){
-                    h+=120+8;
-                    hB=0;
+                //añade fila
+                if (hB == 6) {
+                    h += 120 + 8;
+                    hB = 0;
                 }
-                btnSMnu[dBotones]= new javax.swing.JButton();
+                btnSMnu[dBotones] = new javax.swing.JButton();
                 panSubAlimentos.add(btnSMnu[dBotones]);
-                btnSMnu[dBotones].setBounds(120*hB+8*hB, h, 120, 120);
+                btnSMnu[dBotones].setBounds(120 * hB + 8 * hB, h, 120, 120);
                 btnSMnu[dBotones].setText(rs.getString("nombre"));
-                btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));        
+                btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));
                 btnSMnu[dBotones].setContentAreaFilled(false);
                 btnSMnu[dBotones].setOpaque(true);
                 
                 
+                //construimos los objetos productos
+                aProd[dBotones]=new Productos();
+                aProd[dBotones].setCod(rs.getInt("codigo"));
+                aProd[dBotones].setNombre(  btnSMnu[dBotones].getText());
+                aProd[dBotones].setPrecio(rs.getDouble("precio"));
                 //EVENTO
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
+                        evtBoton(evt);
                     }
                 });
-                
-                
-                
-                
-                System.out.println(hB+""+dBotones);
+
+                System.out.println(hB + "" + dBotones);
                 hB++;
                 dBotones++;
             }
@@ -740,7 +757,44 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mSub
 
-    
+    private void evtBoton(java.awt.event.ActionEvent evt) {
+        double total=0;
+        double subtotal=0;
+        javax.swing.JButton botonPulsado = (javax.swing.JButton) evt.getSource();
+         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
+        for (int i = 0; i < count; i++) {
+            if (botonPulsado.equals(btnSMnu[i])) {
+               
+                m.addRow(new Object[]{
+                    aProd[i].getCod(), aProd[i].getNombre(), 1, aProd[i].getPrecio()}
+                );
+
+            }
+        }
+        
+        
+        
+        for (int i = 0; i < m.getRowCount(); i++) {
+			subtotal = Double.parseDouble(m.getValueAt(i, 3).toString());
+			total = total + subtotal;
+		}
+		
+        //m.getValueAt( 4);
+        lblTotal.setText(total+"");
+    }
+
+
+    private void adCli(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adCli
+        int ultPos = arrayModelos.size();
+        arrayModelos.add(new DefaultTableModel(new Object[][]{},
+                new String[]{
+                    "Cod", "Producto", "Cantidad", "Total"
+                }));
+
+        jTable1.setModel(arrayModelos.get(ultPos));
+    lblTotal.setText("0");
+        //System.out.println(arrayModelos.size()+""+ultPos);
+    }//GEN-LAST:event_adCli
 
     /**
      * @param args the command line arguments
@@ -822,7 +876,11 @@ public class Tpv extends javax.swing.JFrame {
     java.sql.Statement st;
     java.sql.ResultSet rs;
     java.sql.Connection conexion;
-    javax.swing.JButton [] btnSMnu;
+    public int count = 0;
+    javax.swing.JButton[] btnSMnu;
+    public Productos [] aProd;
     javax.swing.Timer hora;
+
+    ArrayList<javax.swing.table.DefaultTableModel> arrayModelos = new ArrayList();
 
 }
