@@ -514,6 +514,9 @@
             <Property name="text" type="java.lang.String" value="0"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="numero"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn1">
           <Properties>
@@ -631,6 +634,9 @@
             <Property name="text" type="java.lang.String" value=","/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="numero"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnEl">
           <Properties>
@@ -643,6 +649,9 @@
             <Property name="text" type="java.lang.String" value="X"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminar"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnMC">
           <Properties>
@@ -664,6 +673,9 @@
             <Property name="text" type="java.lang.String" value="MP"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMPActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnTicket">
           <Properties>

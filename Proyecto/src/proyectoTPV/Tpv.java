@@ -35,6 +35,33 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    public class timeMC implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+
+            if (contMC < 1 && ultimoC != false) {
+                tempMC.start();
+                contMC++;
+            } else if (contMC < 1 && ultimoP != false) {
+                tempMC.start();
+                contMC++;
+            } else {
+                ultimoC = false;
+                ultimoP = false;
+                cCero=false;
+                contMC = 0;
+                tempMC.stop();
+                btnMC.setBackground(Color.LIGHT_GRAY);
+                btnMP.setBackground(Color.LIGHT_GRAY);
+            }
+            //System.out.println(contMC);
+            //System.out.println(ultimoC);
+            //System.out.println(ultimoP);
+        }
+
+    }
+
     /**
      * Creates new form Tpv
      */
@@ -387,6 +414,11 @@ public class Tpv extends javax.swing.JFrame {
         btn0.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn0.setText("0");
         btn0.setFocusPainted(false);
+        btn0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btn1.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btn1.setText("1");
@@ -472,11 +504,21 @@ public class Tpv extends javax.swing.JFrame {
         btnComa.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnComa.setText(",");
         btnComa.setFocusPainted(false);
+        btnComa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numero(evt);
+            }
+        });
 
         btnEl.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnEl.setForeground(new java.awt.Color(255, 0, 0));
         btnEl.setText("X");
         btnEl.setFocusPainted(false);
+        btnEl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminar(evt);
+            }
+        });
 
         btnMC.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnMC.setText("MC");
@@ -490,6 +532,11 @@ public class Tpv extends javax.swing.JFrame {
         btnMP.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnMP.setText("MP");
         btnMP.setFocusPainted(false);
+        btnMP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMPActionPerformed(evt);
+            }
+        });
 
         btnTicket.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnTicket.setText("Tck");
@@ -795,7 +842,7 @@ public class Tpv extends javax.swing.JFrame {
                 btnSMnu[dBotones].setOpaque(true);
 
                 //construimos los objetos productos
-                aProd[dBotones] = new Productos(rs.getInt("codigo"),btnSMnu[dBotones].getText(), rs.getString("tipo"), rs.getInt("cantidad"),rs.getDouble("precio"));
+                aProd[dBotones] = new Productos(rs.getInt("codigo"), btnSMnu[dBotones].getText(), rs.getString("tipo"), rs.getInt("cantidad"), rs.getDouble("precio"));
                 //EVENTO
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -814,40 +861,38 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_mSub
 
     private void evtBoton(java.awt.event.ActionEvent evt) {
-        
+
         m = (DefaultTableModel) jTable1.getModel();
-        
-                        addM1P= true;
+
+        addM1P = true;
         javax.swing.JButton botonPulsado = (javax.swing.JButton) evt.getSource();
         for (int i = 0; i < count; i++) {
             if (botonPulsado.equals(btnSMnu[i])) {
                 //coger nombre en el modelo
-                for(int n = 0; n<m.getRowCount(); n++){
+                for (int n = 0; n < m.getRowCount(); n++) {
                     String nombre = m.getValueAt(n, 1).toString();
-                    cant = (Integer)Integer.parseInt(m.getValueAt(n, 2).toString());
-                    
+                    cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
+
                     System.out.println(cant);
-                    if(aProd[i].getNombre().equals(nombre)){
-                        cant+=1;
+                    if (aProd[i].getNombre().equals(nombre)) {
+                        cant += 1;
                         m.setValueAt(cant, n, 2);
-                        m.setValueAt((Double)Double.parseDouble(m.getValueAt(n, 3).toString())*cant, n, 4);
-                        addM1P= false;
-            verTotal();            
-        
+                        m.setValueAt((Double) Double.parseDouble(m.getValueAt(n, 3).toString()) * cant, n, 4);
+                        addM1P = false;
+                        verTotal();
+
                     }
-                        }
-                if(addM1P){
-                m.addRow(new Object[]{
-                    aProd[i].getCod(), aProd[i].getNombre(), cantidad, (aProd[i].getPrecio()), aProd[i].getPrecio()*cantidad}
-                );
+                }
+                if (addM1P) {
+                    m.addRow(new Object[]{
+                        aProd[i].getCod(), aProd[i].getNombre(), cantidad, (aProd[i].getPrecio()), aProd[i].getPrecio() * cantidad}
+                    );
                 }
             }
         }
         verTotal();
     }
 
-    
-    
     private void verTotal() {
         double total = 0;
         double subtotal = 0;
@@ -855,7 +900,7 @@ public class Tpv extends javax.swing.JFrame {
             subtotal = Double.parseDouble(m.getValueAt(i, 4).toString());
             total = total + subtotal;
         }
-        lblTotal.setText(total + "");
+        lblTotal.setText(total + " €");
     }
 
 
@@ -863,7 +908,7 @@ public class Tpv extends javax.swing.JFrame {
         int ultPos = arrayModelos.size();
         arrayModelos.add(new DefaultTableModel(new Object[][]{},
                 new String[]{
-                    "Cod", "Producto", "Cantidad", "Precio","Total"
+                    "Cod", "Producto", "Cantidad", "Precio", "Total"
                 }));
 
         jTable1.setModel(arrayModelos.get(ultPos));
@@ -877,7 +922,7 @@ public class Tpv extends javax.swing.JFrame {
             try {
                 if (jTable1.getModel().equals(arrayModelos.get(i))) {
                     jTable1.setModel(arrayModelos.get(i - 1));
-                    
+
                     m = (DefaultTableModel) jTable1.getModel();
                     verTotal();
                 }
@@ -893,7 +938,7 @@ public class Tpv extends javax.swing.JFrame {
             try {
                 if (jTable1.getModel().equals(arrayModelos.get(i))) {
                     jTable1.setModel(arrayModelos.get(i + 1));
-                    
+
                     m = (DefaultTableModel) jTable1.getModel();
                     verTotal();
                 }
@@ -903,24 +948,86 @@ public class Tpv extends javax.swing.JFrame {
      }//GEN-LAST:event_mAlante
 
     private void btnMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMCActionPerformed
-      ultimoC = true;    
+        if (ultimoC == false && ultimoP == false) {
+            btnMC.setBackground(Color.green);
+            ultimoC = true;
+            tempoMC();
+            valor = "";
+        }
     }//GEN-LAST:event_btnMCActionPerformed
 
+    private void tempoMC() {
+        tempMC = new javax.swing.Timer(1000, new timeMC());
+        tempMC.start();
+    }
+
     private void numero(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numero
-       JButton boton = (JButton)evt.getSource();
-       double boton1 = (Double)Double.parseDouble(boton.getText());
-       //TENGO QUE COGER EL PRECIO DE ALGUNA MANERA EN LA BDD
-       if(ultimoC){
-           double total = (Double)(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3))*(boton1);
+        JButton boton = (JButton) evt.getSource();
+
+        if(jTable1.getSelectedRow()!=-1){
+        if (ultimoC) {
+            
+            if(boton.getText().equals("0") && cCero==false){
+        valor = "";
+            }else{
+        valor = valor + boton.getText();
+        
+                cCero=true;
+            }
+            contMC=0;
+            try {
+                double total = (Double) Double.parseDouble(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3).toString()) * ((Double) Double.parseDouble(valor));
+
+                jTable1.getModel().setValueAt(valor, jTable1.getSelectedRow(), 2);
+                jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
+                
+                m = (DefaultTableModel) jTable1.getModel();
+                verTotal();
+
+            } catch (Exception ex) {
+            }
+        } 
+        
+        else if (ultimoP) {
+            
+            if(boton.getText().equals(",")){
+               String valor1 = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3).toString();
+                if(valor1.contains(".")==false && !valor1.equals("")){
+                    valor = valor + ".";
+                }
+            }else if(boton.getText().equals("0") && valor.equals("0")){
+        valor = "0";
+            }else{
+            
+        valor = valor + boton.getText();
+            contMC=0;
+
+                double total = (Double)Double.parseDouble(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2).toString()) * ((Double) Double.parseDouble(valor));
+                jTable1.getModel().setValueAt(valor, jTable1.getSelectedRow(), 3);
+                jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
+
+                m = (DefaultTableModel) jTable1.getModel();
+                verTotal();
+
            
-           jTable1.getModel().setValueAt(boton.getText(), jTable1.getSelectedRow(), 2);
-           jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
-           
-           
-            m = (DefaultTableModel) jTable1.getModel();
-                    verTotal();
-       }
+            }
+        }}
     }//GEN-LAST:event_numero
+
+    private void btnMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMPActionPerformed
+        if (ultimoP == false) {
+            btnMP.setBackground(Color.green);
+            ultimoP = true;
+            tempoMC();
+            valor = "";
+        }
+    }//GEN-LAST:event_btnMPActionPerformed
+
+    private void eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar
+        ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+         m = (DefaultTableModel) jTable1.getModel();
+         verTotal();
+    }//GEN-LAST:event_eliminar
 
     /**
      * @param args the command line arguments
@@ -1010,7 +1117,13 @@ public class Tpv extends javax.swing.JFrame {
     ArrayList<javax.swing.table.DefaultTableModel> arrayModelos = new ArrayList();
     int cantidad = 1;
     boolean ultimoC;
-    boolean addM1P= true;
+    boolean ultimoP;
+    boolean addM1P = true;
     int cant;
+    String valor = "";
+    boolean cCero= false;
+   
 
+    javax.swing.Timer tempMC;
+    int contMC;
 }
