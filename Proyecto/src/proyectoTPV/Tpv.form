@@ -687,6 +687,9 @@
             <Property name="horizontalTextPosition" type="int" value="10"/>
             <Property name="verticalTextPosition" type="int" value="1"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTicketActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCobrar">
           <Properties>
@@ -699,6 +702,9 @@
             <Property name="text" type="java.lang.String" value="Cobrar"/>
             <Property name="focusPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCobrarActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="panLista">
           <Properties>
@@ -767,7 +773,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="text" type="java.lang.String" value="0"/>
+                <Property name="text" type="java.lang.String" value="0.0 &#x20ac;"/>
                 <Property name="horizontalTextPosition" type="int" value="4"/>
                 <Property name="opaque" type="boolean" value="true"/>
               </Properties>

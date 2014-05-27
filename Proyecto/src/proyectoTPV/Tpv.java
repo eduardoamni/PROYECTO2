@@ -32,6 +32,7 @@ public class Tpv extends javax.swing.JFrame {
             GregorianCalendar c = new GregorianCalendar();
             SimpleDateFormat f = new SimpleDateFormat("HH:mm:ss");
             lblHora.setText(f.format(c.getTime()));
+            eliCobrar();
         }
     }
 
@@ -54,6 +55,7 @@ public class Tpv extends javax.swing.JFrame {
                 tempMC.stop();
                 btnMC.setBackground(Color.LIGHT_GRAY);
                 btnMP.setBackground(Color.LIGHT_GRAY);
+                eliCobrar();
             }
             //System.out.println(contMC);
             //System.out.println(ultimoC);
@@ -543,11 +545,21 @@ public class Tpv extends javax.swing.JFrame {
         btnTicket.setFocusPainted(false);
         btnTicket.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
         btnTicket.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
+        btnTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTicketActionPerformed(evt);
+            }
+        });
 
         btnCobrar.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         btnCobrar.setForeground(new java.awt.Color(0, 102, 0));
         btnCobrar.setText("Cobrar");
         btnCobrar.setFocusPainted(false);
+        btnCobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCobrarActionPerformed(evt);
+            }
+        });
 
         panLista.setBackground(new java.awt.Color(95, 84, 50));
         panLista.setAlignmentX(0.0F);
@@ -566,7 +578,7 @@ public class Tpv extends javax.swing.JFrame {
         lblTotal.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
         lblTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblTotal.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblTotal.setText("0");
+        lblTotal.setText("0.0 €");
         lblTotal.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         lblTotal.setOpaque(true);
 
@@ -850,7 +862,7 @@ public class Tpv extends javax.swing.JFrame {
                     }
                 });
 
-                System.out.println(hB + "" + dBotones);
+                //System.out.println(hB + "" + dBotones);
                 hB++;
                 dBotones++;
             }
@@ -873,7 +885,7 @@ public class Tpv extends javax.swing.JFrame {
                     String nombre = m.getValueAt(n, 1).toString();
                     cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
 
-                    System.out.println(cant);
+                    //System.out.println(cant);
                     if (aProd[i].getNombre().equals(nombre)) {
                         cant += 1;
                         m.setValueAt(cant, n, 2);
@@ -896,11 +908,15 @@ public class Tpv extends javax.swing.JFrame {
     private void verTotal() {
         double total = 0;
         double subtotal = 0;
+        
         for (int i = 0; i < m.getRowCount(); i++) {
             subtotal = Double.parseDouble(m.getValueAt(i, 4).toString());
             total = total + subtotal;
         }
         lblTotal.setText(total + " €");
+        if(total == 0){
+             lblTotal.setText("0.0 €");
+        }
     }
 
 
@@ -912,7 +928,7 @@ public class Tpv extends javax.swing.JFrame {
                 }));
 
         jTable1.setModel(arrayModelos.get(ultPos));
-        lblTotal.setText("0");
+        lblTotal.setText("0.0 €");
         //System.out.println(arrayModelos.size()+""+ultPos);
     }//GEN-LAST:event_adCli
 
@@ -977,7 +993,8 @@ public class Tpv extends javax.swing.JFrame {
             contMC=0;
             try {
                 double total = (Double) Double.parseDouble(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3).toString()) * ((Double) Double.parseDouble(valor));
-
+                total = (Math.round(total*100));
+                total = total / 100;
                 jTable1.getModel().setValueAt(valor, jTable1.getSelectedRow(), 2);
                 jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
                 
@@ -1003,6 +1020,8 @@ public class Tpv extends javax.swing.JFrame {
             contMC=0;
 
                 double total = (Double)Double.parseDouble(jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 2).toString()) * ((Double) Double.parseDouble(valor));
+                total = (Math.round(total*100));
+                total = total / 100;
                 jTable1.getModel().setValueAt(valor, jTable1.getSelectedRow(), 3);
                 jTable1.getModel().setValueAt(total, jTable1.getSelectedRow(), 4);
 
@@ -1024,11 +1043,99 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMPActionPerformed
 
     private void eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar
-        ((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
+        try{((DefaultTableModel)jTable1.getModel()).removeRow(jTable1.getSelectedRow());
          m = (DefaultTableModel) jTable1.getModel();
          verTotal();
+        }catch (Exception ex){}
     }//GEN-LAST:event_eliminar
 
+    private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
+        javax.swing.table.DefaultTableModel m = (javax.swing.table.DefaultTableModel)jTable1.getModel();
+        double totales=0.00;
+        System.out.println("===============================================");
+        System.out.println("                Le ha atendido   ");
+        System.out.println("                "+cbxCamarero.getModel().getSelectedItem().toString());
+        System.out.println("=============================================== \n\n");
+        
+        
+        System.out.printf("%-20s %4s %9s %10s" ,"Producto","U ","P/U ","   TOTAL   \n");
+        System.out.printf("%-20S %4s %9s %10s" ,"===================","===","========","  ========\n");
+        for(int f =0; f<m.getRowCount(); f++){
+            for(int c = 1; c<m.getColumnCount(); c ++){
+                if(c==1){
+                System.out.printf("%-20s", m.getValueAt(f, c));
+                }else if(c==2){
+                System.out.printf("%4s", m.getValueAt(f, c).toString());
+                }else if(c==3){
+                   double d = Double.parseDouble(m.getValueAt(f, c).toString());
+                    System.out.printf("%10.2f", d);
+                }else{
+                     System.out.printf("%10.2f", m.getValueAt(f, c));
+                     totales +=  Double.parseDouble(m.getValueAt(f, c).toString());
+                }
+            }
+            System.out.println("\n");            
+        }
+        System.out.println("                              ----------------");
+        System.out.printf("%-20s %2s %9s %10.2f € " ,"","","TOTAL", totales);
+    }//GEN-LAST:event_btnTicketActionPerformed
+
+    private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
+        DefaultTableModel mActu =(DefaultTableModel)jTable1.getModel();
+        try{
+        for(DefaultTableModel m : arrayModelos){
+            if(m.equals(mActu)){
+                 if(lblTotal.getText().equals("0.0 €")){
+                    arrayModelos.remove(m);
+                }else{
+                ///TOCHACO PA VOLVERSE LOCO
+                
+                     
+                
+                
+                
+                
+                
+                ///FIN DE TOCHACO
+                
+                arrayModelos.remove(m);
+            }
+        }}
+        }catch(Exception ex){
+        }
+        
+        try{
+        jTable1.setModel(arrayModelos.get(0));
+        
+        m = (DefaultTableModel) jTable1.getModel();
+        verTotal();
+        
+        }catch(Exception ex){
+            try {
+            borrarFilas();
+            verTotal();
+            }catch(Exception exx){}
+            
+        }
+    }//GEN-LAST:event_btnCobrarActionPerformed
+
+    public void borrarFilas(){
+        DefaultTableModel m = (DefaultTableModel)jTable1.getModel();
+        while(m.getRowCount()!=0){
+            m.removeRow(0);
+        }
+    }
+    
+    public void eliCobrar (){
+        if(lblTotal.getText().equals("0.0 €")){
+            btnCobrar.setForeground(Color.red);
+            btnCobrar.setText("Eliminar");
+        }else{
+            btnCobrar.setForeground(new java.awt.Color(0, 102, 0));
+            btnCobrar.setText("Cobrar");
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
