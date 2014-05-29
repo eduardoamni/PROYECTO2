@@ -43,6 +43,20 @@ public class JDBC {
             return null;
         }
     }
+    public static java.sql.Statement crearSentenciaF(java.sql.Connection conexion, boolean forwardOnly) {
+        try {
+            java.sql.Statement sentencia = conexion.createStatement();
+            if(forwardOnly){
+                sentencia = conexion.createStatement();
+            }else{
+                sentencia = conexion.createStatement( java.sql.ResultSet.TYPE_SCROLL_INSENSITIVE,
+            java.sql.ResultSet.CONCUR_UPDATABLE);
+            }
+            return sentencia;
+        } catch (java.sql.SQLException e) {
+            return null;
+        }
+    }
 
     public static java.sql.ResultSet crearResultado(java.sql.Statement sentencia, String sql) {
         try {
