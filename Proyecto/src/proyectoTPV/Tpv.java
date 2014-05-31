@@ -30,7 +30,7 @@ public class Tpv extends javax.swing.JFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             GregorianCalendar c = new GregorianCalendar();
-            SimpleDateFormat f = new SimpleDateFormat("  EEEE  dd/MM/YYYY  HH:mm");
+            SimpleDateFormat f = new SimpleDateFormat(" dd/MM/YYYY  HH:mm:ss");
             lblHora.setText(f.format(c.getTime()));
             eliCobrar();
             //System.out.println("C"+ultimoC);
@@ -77,7 +77,7 @@ public class Tpv extends javax.swing.JFrame {
     public Tpv() {
         initComponents();
         conexion = JDBC.conectarBD();
-        hora = new javax.swing.Timer(1000, new Liste());
+        hora = new javax.swing.Timer(10, new Liste());
         hora.start();
         verCamareros();
         arrayModelos.add(new DefaultTableModel(new Object[][]{},
@@ -117,6 +117,15 @@ public class Tpv extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         Operaciones = new javax.swing.JFrame();
         jPanel2 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableOp = new javax.swing.JTable();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        cbxDia = new javax.swing.JComboBox();
+        cbxMes = new javax.swing.JComboBox();
+        cbxYear = new javax.swing.JComboBox();
+        btnVer = new javax.swing.JButton();
         Opciones = new javax.swing.JFrame();
         jPanel3 = new javax.swing.JPanel();
         jPFondo = new javax.swing.JPanel();
@@ -160,10 +169,8 @@ public class Tpv extends javax.swing.JFrame {
         btnNCli = new javax.swing.JButton();
         cbxCamarero = new javax.swing.JComboBox();
 
-        Personal.setMaximumSize(new java.awt.Dimension(1280, 734));
         Personal.setMinimumSize(new java.awt.Dimension(1280, 734));
         Personal.setUndecorated(true);
-        Personal.setPreferredSize(new java.awt.Dimension(1280, 734));
 
         jPanel1.setBackground(new java.awt.Color(83, 77, 59));
 
@@ -409,15 +416,125 @@ public class Tpv extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(83, 77, 59));
 
+        jPanel6.setBackground(new java.awt.Color(36, 29, 29));
+
+        tableOp.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        tableOp.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Codigo de Factura", "Fecha", "Hora", "Camarero", "Precio Total"
+            }
+        ));
+        tableOp.setIntercellSpacing(new java.awt.Dimension(2, 2));
+        jScrollPane1.setViewportView(tableOp);
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1102, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jPanel7.setBackground(new java.awt.Color(36, 29, 29));
+
+        jLabel8.setFont(new java.awt.Font("Calibri", 1, 52)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel8.setText("Operaciones");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        cbxDia.setBackground(new java.awt.Color(36, 29, 29));
+        cbxDia.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        cbxDia.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        cbxMes.setBackground(new java.awt.Color(36, 29, 29));
+        cbxMes.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        cbxMes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", " " }));
+
+        cbxYear.setBackground(new java.awt.Color(36, 29, 29));
+        cbxYear.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        cbxYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040" }));
+
+        btnVer.setBackground(new java.awt.Color(36, 29, 29));
+        btnVer.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
+        btnVer.setForeground(new java.awt.Color(204, 204, 204));
+        btnVer.setText("VER");
+        btnVer.setContentAreaFilled(false);
+        btnVer.setOpaque(true);
+        btnVer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
+        btnVer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnVer, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 734, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66))
         );
 
         javax.swing.GroupLayout OperacionesLayout = new javax.swing.GroupLayout(Operaciones.getContentPane());
@@ -431,10 +548,8 @@ public class Tpv extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        Opciones.setMaximumSize(new java.awt.Dimension(1280, 734));
         Opciones.setMinimumSize(new java.awt.Dimension(1280, 734));
         Opciones.setUndecorated(true);
-        Opciones.setPreferredSize(new java.awt.Dimension(1280, 734));
 
         jPanel3.setBackground(new java.awt.Color(83, 77, 59));
 
@@ -1540,8 +1655,37 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPalanteActionPerformed
 
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        
+            String d = cbxMes.getSelectedItem()+"";
+            d +="/"+cbxDia.getSelectedItem();
+            d +="/"+cbxYear.getSelectedItem();
+            
+            
+            javax.swing.table.DefaultTableModel tb = (javax.swing.table.DefaultTableModel)tableOp.getModel();
+            String q = "SELECT * FROM factura WHERE (Fecha =#"+d+"#);";
+            System.out.println(q);
+            java.sql.ResultSet rs = JDBC.crearResultado(st, q);
+         try {   
+            while(rs.next()){  
+                GregorianCalendar h = new GregorianCalendar();
+                h.setTime(rs.getDate(3));
+                SimpleDateFormat f = new SimpleDateFormat("dd/MM/YYYY");
+                String[] l ={rs.getString(1), f.format(h.getTime()),  rs.getString(2).substring(11), rs.getString(4), rs.getString(5)+" €"};
+                tb.addRow(l);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnVerActionPerformed
+
     public void crearFactura(){
-        String q = "INSERT INTO Factura(fecha, camarero, total) VALUES ('"+lblHora.getText()+"', '"+cbxCamarero.getModel().getSelectedItem().toString()+"', '"+lblTotal.getText().substring(0, lblTotal.getText().length()-1)+"');";
+        GregorianCalendar h = new GregorianCalendar();
+        SimpleDateFormat fF = new SimpleDateFormat("dd/MM/YYYY");
+        SimpleDateFormat fH = new SimpleDateFormat("HH:mm:ss");
+        
+        String q = "INSERT INTO Factura(hora, fecha, camarero, total) VALUES ('"+fH.format(h.getTime())+"', '"+fF.format(h.getTime())+"', "
+                + "'"+cbxCamarero.getModel().getSelectedItem().toString()+"', '"+lblTotal.getText().substring(0, lblTotal.getText().length()-1)+"');";
         //System.out.println("INSERT INTO factura(fecha, camarero, total) VALUES ('"+lblHora.getText()+"', '"+cbxCamarero.getModel().getSelectedItem().toString()+"', '"+lblTotal.getText().substring(0, lblTotal.getText().length()-1)+"');");
         
         java.sql.Statement st = JDBC.crearSentencia(conexion);
@@ -1668,20 +1812,28 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JButton btnRefrescos;
     private javax.swing.JButton btnTapas;
     private javax.swing.JButton btnTicket;
+    private javax.swing.JButton btnVer;
     private javax.swing.JComboBox cbxCamarero;
     private javax.swing.JComboBox cbxCargo;
+    private javax.swing.JComboBox cbxDia;
+    private javax.swing.JComboBox cbxMes;
+    private javax.swing.JComboBox cbxYear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPFondo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblHora;
@@ -1692,6 +1844,7 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JPanel panLista;
     private javax.swing.JPanel panMenu;
     private javax.swing.JPanel panSubAlimentos;
+    private javax.swing.JTable tableOp;
     private javax.swing.JTextField txfApellidos;
     private javax.swing.JTextField txfDNI;
     private javax.swing.JTextField txfNombre;
