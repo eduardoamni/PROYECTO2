@@ -7,6 +7,7 @@ package proyectoTPV;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -203,6 +204,8 @@ public class Tpv extends javax.swing.JFrame {
         lblCCambio = new javax.swing.JLabel();
         lblCCaja = new javax.swing.JLabel();
         jPFondo = new javax.swing.JPanel();
+        spanSubAlimentos = new javax.swing.JScrollPane();
+        panSubAlimentos = new javax.swing.JPanel();
         panAlimentos = new javax.swing.JPanel();
         btnRefrescos = new javax.swing.JButton();
         btnLicores = new javax.swing.JButton();
@@ -210,7 +213,6 @@ public class Tpv extends javax.swing.JFrame {
         btnTapas = new javax.swing.JButton();
         btnPostres = new javax.swing.JButton();
         btnCafes = new javax.swing.JButton();
-        panSubAlimentos = new javax.swing.JPanel();
         panMenu = new javax.swing.JPanel();
         lblHora = new javax.swing.JLabel();
         btnProductos = new javax.swing.JButton();
@@ -1586,14 +1588,30 @@ public class Tpv extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1280, 791));
         setMinimumSize(new java.awt.Dimension(1280, 791));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1280, 791));
         setResizable(false);
         getContentPane().setLayout(null);
 
         jPFondo.setBackground(new java.awt.Color(83, 77, 59));
+
+        spanSubAlimentos.setBorder(null);
+        spanSubAlimentos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        panSubAlimentos.setBackground(new java.awt.Color(83, 77, 59));
+
+        javax.swing.GroupLayout panSubAlimentosLayout = new javax.swing.GroupLayout(panSubAlimentos);
+        panSubAlimentos.setLayout(panSubAlimentosLayout);
+        panSubAlimentosLayout.setHorizontalGroup(
+            panSubAlimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panSubAlimentosLayout.setVerticalGroup(
+            panSubAlimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        spanSubAlimentos.setViewportView(panSubAlimentos);
 
         panAlimentos.setOpaque(false);
 
@@ -1763,19 +1781,6 @@ public class Tpv extends javax.swing.JFrame {
                     .addComponent(btnPostres, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCafes, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        panSubAlimentos.setOpaque(false);
-
-        javax.swing.GroupLayout panSubAlimentosLayout = new javax.swing.GroupLayout(panSubAlimentos);
-        panSubAlimentos.setLayout(panSubAlimentosLayout);
-        panSubAlimentosLayout.setHorizontalGroup(
-            panSubAlimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panSubAlimentosLayout.setVerticalGroup(
-            panSubAlimentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panMenu.setBackground(new java.awt.Color(36, 29, 29));
@@ -2091,10 +2096,7 @@ public class Tpv extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Cod", "Producto", "Cantidad", "Total"
@@ -2175,9 +2177,7 @@ public class Tpv extends javax.swing.JFrame {
             jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPFondoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panSubAlimentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panAlimentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(panAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPFondoLayout.createSequentialGroup()
@@ -2221,6 +2221,11 @@ public class Tpv extends javax.swing.JFrame {
                                     .addComponent(btnTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPFondoLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(507, Short.MAX_VALUE)))
         );
         jPFondoLayout.setVerticalGroup(
             jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2229,8 +2234,7 @@ public class Tpv extends javax.swing.JFrame {
                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addComponent(panAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(panSubAlimentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnPost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2271,6 +2275,11 @@ public class Tpv extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPFondoLayout.createSequentialGroup()
+                    .addContainerGap(290, Short.MAX_VALUE)
+                    .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(101, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPFondo);
@@ -2355,17 +2364,19 @@ public class Tpv extends javax.swing.JFrame {
         int h = 0;
         int hB = 0;
          int cantidad = 0;
+        int altura = 156;
         try {
             while (rs.next()) {
                 //añade fila
-                if (hB == 6) {
-                    h += 120 + 8;
+                if (hB == 7) {
+                    h += 98 + 8;
                     hB = 0;
+                    altura+=98;
                 }
                 cantidad = rs.getInt("cantidad");
                 btnSMnu[dBotones] = new javax.swing.JButton();
                 panSubAlimentos.add(btnSMnu[dBotones]);
-                btnSMnu[dBotones].setBounds(120 * hB + 8 * hB, h, 120, 120);
+                btnSMnu[dBotones].setBounds(98 * hB + 8 * hB, h, 98, 98);
                 btnSMnu[dBotones].setText(rs.getString("nombre"));
                 btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));
                 btnSMnu[dBotones].setContentAreaFilled(false);
@@ -2392,6 +2403,8 @@ public class Tpv extends javax.swing.JFrame {
                 hB++;
                 dBotones++;
             }
+            spanSubAlimentos.getVerticalScrollBar().setSize(20, Integer.MAX_VALUE);
+            panSubAlimentos.setPreferredSize(new Dimension(0,altura));
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
@@ -2409,11 +2422,11 @@ public class Tpv extends javax.swing.JFrame {
                 if (botonPulsado.equals(btnSMnu[i])) {
                     //coger nombre en el modelo
                     for (int n = 0; n < m.getRowCount(); n++) {
-                        String nombre = m.getValueAt(n, 1).toString();
+                        String nombre = m.getValueAt(n, 0).toString();
                         cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
 
                         //System.out.println(cant);
-                        if (aProd[i].getNombre().equals(nombre)) {
+                        if ((aProd[i].getCod()+"").equals(nombre)) {
                             cant += 1;
                             m.setValueAt(cant, n, 2);
                             m.setValueAt((Double) Double.parseDouble(m.getValueAt(n, 3).toString()) * cant, n, 4);
@@ -2638,13 +2651,15 @@ public class Tpv extends javax.swing.JFrame {
                     if (lblTotal.getText().equals("0.00 €")) {
                         arrayModelos.remove(m);
                     } else {
-                        ///TOCHACO PA VOLVERSE LOCO
+                        if(verCantidad()){
                         restarCantidad();
                         crearFactura();
                         crearOperacionesF();
-                        ///FIN DE TOCHACO
 
                         arrayModelos.remove(m);
+                        }else{
+                            javax.swing.JOptionPane.showMessageDialog(this, "Cantidad de producto no valida ", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
+                        }
                     }
                 }
             }
@@ -3094,14 +3109,42 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
-    private void restarCantidad(){
-        ResultSet rs;
-        java.sql.Statement st2 = JDBC.crearSentencia(conexion);
+    private boolean verCantidad() {
+    boolean cant = true;
+    int canti = 4;
         for(int f = 0; f<jTable1.getModel().getRowCount(); f++){
+          
+            ResultSet rsC;
             int idP = Integer.parseInt(jTable1.getValueAt(f, 0)+"");
             int cP = Integer.parseInt(jTable1.getValueAt(f, 2)+"");
+            String qC = "SELECT * FROM producto WHERE codigo = "+idP+";";
+            System.out.println(qC);
+            rsC = JDBC.crearResultado(st, qC);
+        try {
+            while(rsC.next()){
+            canti =Integer.parseInt(rsC.getString("cantidad").toString());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            System.out.println(canti);
+            if(canti<cP){
+                cant= false;
+            }else{}
+    }
+        System.out.println(cant);
+        return cant;
+    }
+    
+    private void restarCantidad(){
+        for(int f = 0; f<jTable1.getModel().getRowCount(); f++){
+          
+            int idP = Integer.parseInt(jTable1.getValueAt(f, 0)+"");
+            int cP = Integer.parseInt(jTable1.getValueAt(f, 2)+"");
+            
             String q = "UPDATE producto SET cantidad = cantidad-" +cP +  " WHERE codigo =" + idP+ " AND cantidad>="+cP+";";
-            rs = JDBC.crearResultado(st2, q);
+            rs = JDBC.crearResultado(st, q);
+               
         }
     }
     
@@ -3316,6 +3359,7 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtManana;
     private javax.swing.JRadioButton rbtTarde;
     private javax.swing.JRadioButton rbtTodos;
+    private javax.swing.JScrollPane spanSubAlimentos;
     private javax.swing.JTable tProd;
     private javax.swing.JTable tableOp;
     private javax.swing.JTable tbFact;
@@ -3362,4 +3406,5 @@ public class Tpv extends javax.swing.JFrame {
 
     private CierreTurno c;
     private boolean Tcerrado = true;
+    
 }

@@ -63,7 +63,6 @@ public class JDBC {
             java.sql.ResultSet resultado = sentencia.executeQuery(sql);
             return resultado;
         } catch (java.sql.SQLException e) {
-            System.out.println("SQL Exception: " + e.toString());
             return null;
         }
     }
