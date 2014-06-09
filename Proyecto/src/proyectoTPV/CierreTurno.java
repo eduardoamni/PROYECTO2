@@ -36,9 +36,6 @@ public class CierreTurno {
         this.total += total;
     }
 
-    public void setCambio(double cambio) {
-        this.cambio = cambio;
-    }
     
     public double totalCaja (){
         return total+cambio;

@@ -11,6 +11,7 @@ import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -87,11 +88,7 @@ public class Tpv extends javax.swing.JFrame {
         hora = new javax.swing.Timer(10, new Liste());
         hora.start();
         verCamareros();
-        arrayModelos.add(new DefaultTableModel(new Object[][]{},
-                new String[]{
-                    "Cod", "Producto", "Cantidad", "Precio", "Total"
-                }));
-        jTable1.setModel(arrayModelos.get(0));
+        
         InitOpciones();
     }
 
@@ -694,15 +691,17 @@ public class Tpv extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(rbtTarde)
                                 .addComponent(rbtManana)
                                 .addComponent(rbtTodos)
-                                .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66))
         );
@@ -1295,7 +1294,6 @@ public class Tpv extends javax.swing.JFrame {
 
         Opciones.setMinimumSize(new java.awt.Dimension(1280, 734));
         Opciones.setUndecorated(true);
-        Opciones.setPreferredSize(new java.awt.Dimension(1280, 734));
 
         jPanel11.setBackground(new java.awt.Color(83, 77, 59));
 
@@ -1482,8 +1480,8 @@ public class Tpv extends javax.swing.JFrame {
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        Cierre.setAlwaysOnTop(true);
         Cierre.setBounds(new java.awt.Rectangle(300, 0, 0, 0));
-        Cierre.setMaximumSize(new java.awt.Dimension(600, 700));
         Cierre.setMinimumSize(new java.awt.Dimension(600, 700));
         Cierre.setUndecorated(true);
 
@@ -2282,6 +2280,7 @@ public class Tpv extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void verCamareros() {
+        cbxCamarero.removeAllItems();
         st = JDBC.crearSentencia(conexion);
         rs = JDBC.crearResultado(st, "SELECT nombre_c FROM Personal WHERE cargo='camarero';");
         try {
@@ -2337,7 +2336,7 @@ public class Tpv extends javax.swing.JFrame {
         st = JDBC.crearSentencia(conexion);
 
         //COUNT PARA CREAR LOS BOTONES
-        String c = "SELECT COUNT (*) AS count FROM Producto WHERE tipo = '" + tipo + "';";
+        String c = "SELECT COUNT (*) AS count FROM Producto WHERE cantidad>0 AND tipo = '" + tipo + "';";
         rs = JDBC.crearResultado(st, c);
 
         try {
@@ -2351,10 +2350,11 @@ public class Tpv extends javax.swing.JFrame {
         btnSMnu = new javax.swing.JButton[count];
         aProd = new Productos[count];
         int dBotones = 0;
-        String q = "SELECT * FROM Producto WHERE tipo = '" + tipo + "';";
+        String q = "SELECT * FROM Producto WHERE cantidad>0 AND tipo = '" + tipo + "';";
         rs = JDBC.crearResultado(st, q);
         int h = 0;
         int hB = 0;
+         int cantidad = 0;
         try {
             while (rs.next()) {
                 //añade fila
@@ -2362,6 +2362,7 @@ public class Tpv extends javax.swing.JFrame {
                     h += 120 + 8;
                     hB = 0;
                 }
+                cantidad = rs.getInt("cantidad");
                 btnSMnu[dBotones] = new javax.swing.JButton();
                 panSubAlimentos.add(btnSMnu[dBotones]);
                 btnSMnu[dBotones].setBounds(120 * hB + 8 * hB, h, 120, 120);
@@ -2371,10 +2372,15 @@ public class Tpv extends javax.swing.JFrame {
                 btnSMnu[dBotones].setOpaque(true);
                 
                  btnSMnu[dBotones].setFont(new java.awt.Font("Calibri", 1, 13)); // NOI18N
+                 
+                 if(cantidad <20){
+                 btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+                 }else{
+                  btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+                 }
                  btnSMnu[dBotones].setForeground(new java.awt.Color(204, 204, 204));
-
                 //construimos los objetos productos
-                aProd[dBotones] = new Productos(rs.getInt("codigo"), btnSMnu[dBotones].getText(), rs.getString("tipo"), rs.getInt("cantidad"), rs.getDouble("precio"));
+                aProd[dBotones] = new Productos(rs.getInt("codigo"), btnSMnu[dBotones].getText(), rs.getString("tipo"), cantidad, rs.getDouble("precio"));
                 //EVENTO
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2633,7 +2639,7 @@ public class Tpv extends javax.swing.JFrame {
                         arrayModelos.remove(m);
                     } else {
                         ///TOCHACO PA VOLVERSE LOCO
-
+                        restarCantidad();
                         crearFactura();
                         crearOperacionesF();
                         ///FIN DE TOCHACO
@@ -2659,6 +2665,8 @@ public class Tpv extends javax.swing.JFrame {
             }
 
         }
+        
+        mSub(evt);
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     private void btnPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalActionPerformed
@@ -2703,6 +2711,8 @@ public class Tpv extends javax.swing.JFrame {
         Operaciones.setVisible(false);
         Personal.setVisible(false);
         Opciones.setVisible(false);
+        verCamareros();
+        mSub(evt);
     }//GEN-LAST:event_btnMainActionPerformed
 
     private void btnPatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatrasActionPerformed
@@ -3084,7 +3094,19 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    private void restarCantidad(){
+        ResultSet rs;
+        java.sql.Statement st2 = JDBC.crearSentencia(conexion);
+        for(int f = 0; f<jTable1.getModel().getRowCount(); f++){
+            int idP = Integer.parseInt(jTable1.getValueAt(f, 0)+"");
+            int cP = Integer.parseInt(jTable1.getValueAt(f, 2)+"");
+            String q = "UPDATE producto SET cantidad = cantidad-" +cP +  " WHERE codigo =" + idP+ " AND cantidad>="+cP+";";
+            rs = JDBC.crearResultado(st2, q);
+        }
+    }
+    
     private void crearOperacionesF() {
+        
         String q = "SELECT c_factura FROM factura";
         java.sql.ResultSet rs = JDBC.crearResultado(st, q);
 
