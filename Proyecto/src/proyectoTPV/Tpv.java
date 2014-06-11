@@ -26,7 +26,7 @@ import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * k
  * @author edu
  */
 public class Tpv extends javax.swing.JFrame {
