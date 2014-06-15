@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * k
+ *
  * @author edu
  */
 public class Tpv extends javax.swing.JFrame {
@@ -56,12 +57,11 @@ public class Tpv extends javax.swing.JFrame {
 
         @Override
         public void actionPerformed(ActionEvent ae) {
-
-            if (contMC < 2 && ultimoC != false) {
-                tempMC.start();
+            tempMC.start();
+            if (contMC < 1 && ultimoC != false) {
                 contMC++;
-            } else if (contMC < 2 && ultimoP != false) {
-                tempMC.start();
+            } else if (contMC < 1 && ultimoP != false) {
+
                 contMC++;
             } else {
                 ultimoC = false;
@@ -89,8 +89,10 @@ public class Tpv extends javax.swing.JFrame {
         hora = new javax.swing.Timer(10, new Liste());
         hora.start();
         verCamareros();
-        
+        Opciones.setAlwaysOnTop(true);
+        Opciones.setVisible(true);
         InitOpciones();
+        cantCli();
     }
 
     /**
@@ -245,6 +247,7 @@ public class Tpv extends javax.swing.JFrame {
         btnAnt = new javax.swing.JButton();
         btnNCli = new javax.swing.JButton();
         cbxCamarero = new javax.swing.JComboBox();
+        lblModelo = new javax.swing.JLabel();
 
         Personal.setMinimumSize(new java.awt.Dimension(1280, 734));
         Personal.setUndecorated(true);
@@ -1509,6 +1512,14 @@ public class Tpv extends javax.swing.JFrame {
         btnExit1.setText("X");
         btnExit1.setContentAreaFilled(false);
         btnExit1.setOpaque(true);
+        btnExit1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                fondoAzul(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fondoNormal(evt);
+            }
+        });
         btnExit1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExit1ActionPerformed(evt);
@@ -1583,7 +1594,7 @@ public class Tpv extends javax.swing.JFrame {
         CierreLayout.setVerticalGroup(
             CierreLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CierreLayout.createSequentialGroup()
-                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -1901,28 +1912,29 @@ public class Tpv extends javax.swing.JFrame {
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panMenuLayout.createSequentialGroup()
                 .addComponent(btnMain, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(68, 68, 68)
+                .addComponent(btnOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnOperaciones, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPersonal, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         panMenuLayout.setVerticalGroup(
             panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 82, Short.MAX_VALUE)
-            .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addComponent(lblHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                    .addComponent(btnOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-                .addComponent(btnOperaciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnPersonal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(btnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panMenuLayout.createSequentialGroup()
+                .addGroup(panMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblHora, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOpciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnOperaciones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPersonal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btn0.setFont(new java.awt.Font("Calibri", 1, 36)); // NOI18N
@@ -2099,14 +2111,14 @@ public class Tpv extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Cod", "Producto", "Cantidad", "Total"
+                "Cod", "Producto", "Cantidad", "Precio", "Total"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -2171,23 +2183,31 @@ public class Tpv extends javax.swing.JFrame {
 
         cbxCamarero.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
 
+        lblModelo.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        lblModelo.setForeground(new java.awt.Color(204, 204, 204));
+        lblModelo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jPFondoLayout = new javax.swing.GroupLayout(jPFondo);
         jPFondo.setLayout(jPFondoLayout);
         jPFondoLayout.setHorizontalGroup(
             jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPFondoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addComponent(cbxCamarero, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnNCli, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAnt, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPost, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnNCli)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAnt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPost, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(panLista, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
                         .addGroup(jPFondoLayout.createSequentialGroup()
@@ -2221,11 +2241,6 @@ public class Tpv extends javax.swing.JFrame {
                                     .addComponent(btnTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(panMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPFondoLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(507, Short.MAX_VALUE)))
         );
         jPFondoLayout.setVerticalGroup(
             jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2234,13 +2249,15 @@ public class Tpv extends javax.swing.JFrame {
                 .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addComponent(panAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPFondoLayout.createSequentialGroup()
                         .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnPost, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnAnt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnNCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbxCamarero))
+                            .addComponent(cbxCamarero)
+                            .addComponent(lblModelo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panLista, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2272,14 +2289,9 @@ public class Tpv extends javax.swing.JFrame {
                             .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnComa, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnCobrar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(9, 9, 9)
                 .addComponent(panMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPFondoLayout.createSequentialGroup()
-                    .addContainerGap(290, Short.MAX_VALUE)
-                    .addComponent(spanSubAlimentos, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(101, Short.MAX_VALUE)))
         );
 
         getContentPane().add(jPFondo);
@@ -2288,6 +2300,26 @@ public class Tpv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cantCli() {
+        int p = 0;
+        int t = 0;
+        
+        for(int i = 0 ; i < arrayModelos.size(); i ++){
+            if(arrayModelos.get(i)==jTable1.getModel()){
+                p = i;
+            }
+        }
+        t = arrayModelos.size();
+        
+        if(arrayModelos.size()==0){
+        p = 0;
+        }else{
+        p = p+1;
+        }
+        
+        lblModelo.setText(p+" /"+t);
+    }
+    
     private void verCamareros() {
         cbxCamarero.removeAllItems();
         st = JDBC.crearSentencia(conexion);
@@ -2363,7 +2395,7 @@ public class Tpv extends javax.swing.JFrame {
         rs = JDBC.crearResultado(st, q);
         int h = 0;
         int hB = 0;
-         int cantidad = 0;
+        int cantidad = 0;
         int altura = 156;
         try {
             while (rs.next()) {
@@ -2371,7 +2403,7 @@ public class Tpv extends javax.swing.JFrame {
                 if (hB == 7) {
                     h += 98 + 8;
                     hB = 0;
-                    altura+=98;
+                    altura += 98;
                 }
                 cantidad = rs.getInt("cantidad");
                 btnSMnu[dBotones] = new javax.swing.JButton();
@@ -2381,15 +2413,15 @@ public class Tpv extends javax.swing.JFrame {
                 btnSMnu[dBotones].setBackground(new java.awt.Color(36, 29, 29));
                 btnSMnu[dBotones].setContentAreaFilled(false);
                 btnSMnu[dBotones].setOpaque(true);
-                
-                 btnSMnu[dBotones].setFont(new java.awt.Font("Calibri", 1, 13)); // NOI18N
-                 
-                 if(cantidad <20){
-                 btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
-                 }else{
-                  btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-                 }
-                 btnSMnu[dBotones].setForeground(new java.awt.Color(204, 204, 204));
+
+                btnSMnu[dBotones].setFont(new java.awt.Font("Calibri", 1, 13)); // NOI18N
+
+                if (cantidad < 20) {
+                    btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+                } else {
+                    btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+                }
+                btnSMnu[dBotones].setForeground(new java.awt.Color(204, 204, 204));
                 //construimos los objetos productos
                 aProd[dBotones] = new Productos(rs.getInt("codigo"), btnSMnu[dBotones].getText(), rs.getString("tipo"), cantidad, rs.getDouble("precio"));
                 //EVENTO
@@ -2404,7 +2436,7 @@ public class Tpv extends javax.swing.JFrame {
                 dBotones++;
             }
             spanSubAlimentos.getVerticalScrollBar().setSize(20, Integer.MAX_VALUE);
-            panSubAlimentos.setPreferredSize(new Dimension(0,altura));
+            panSubAlimentos.setPreferredSize(new Dimension(0, altura));
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
@@ -2412,44 +2444,44 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_mSub
 
     private void evtBoton(java.awt.event.ActionEvent evt) {
-        if(!lblTurno.getText().equals("")){
-        if (arrayModelos.size() > 0) {
-            m = (DefaultTableModel) jTable1.getModel();
+        if (!lblTurno.getText().equals("")) {
+            if (arrayModelos.size() > 0) {
+                m = (DefaultTableModel) jTable1.getModel();
 
-            addM1P = true;
-            javax.swing.JButton botonPulsado = (javax.swing.JButton) evt.getSource();
-            for (int i = 0; i < count; i++) {
-                if (botonPulsado.equals(btnSMnu[i])) {
-                    //coger nombre en el modelo
-                    for (int n = 0; n < m.getRowCount(); n++) {
-                        String nombre = m.getValueAt(n, 0).toString();
-                        cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
+                addM1P = true;
+                javax.swing.JButton botonPulsado = (javax.swing.JButton) evt.getSource();
+                for (int i = 0; i < count; i++) {
+                    if (botonPulsado.equals(btnSMnu[i])) {
+                        //coger nombre en el modelo
+                        for (int n = 0; n < m.getRowCount(); n++) {
+                            String nombre = m.getValueAt(n, 0).toString();
+                            cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
 
-                        //System.out.println(cant);
-                        if ((aProd[i].getCod()+"").equals(nombre)) {
-                            cant += 1;
-                            m.setValueAt(cant, n, 2);
-                            m.setValueAt((Double) Double.parseDouble(m.getValueAt(n, 3).toString()) * cant, n, 4);
-                            addM1P = false;
-                            verTotal();
+                            //System.out.println(cant);
+                            if ((aProd[i].getCod() + "").equals(nombre)) {
+                                cant += 1;
+                                m.setValueAt(cant, n, 2);
+                                m.setValueAt((Double) Double.parseDouble(m.getValueAt(n, 3).toString()) * cant, n, 4);
+                                addM1P = false;
+                                verTotal();
 
+                            }
+                        }
+                        if (addM1P) {
+                            m.addRow(new Object[]{
+                                aProd[i].getCod(), aProd[i].getNombre(), cantidad, (aProd[i].getPrecio()), aProd[i].getPrecio() * cantidad}
+                            );
                         }
                     }
-                    if (addM1P) {
-                        m.addRow(new Object[]{
-                            aProd[i].getCod(), aProd[i].getNombre(), cantidad, (aProd[i].getPrecio()), aProd[i].getPrecio() * cantidad}
-                        );
-                    }
                 }
+                verTotal();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(nProducto, "Debe de añadir un cliente nuevo", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
             }
-            verTotal();
-        }else{
-        javax.swing.JOptionPane.showMessageDialog(nProducto, "Debe de añadir un cliente nuevo", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(nProducto, "Debe de abrir un turno", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
+
         }
-        }else{
-        javax.swing.JOptionPane.showMessageDialog(nProducto, "Debe de abrir un turno", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
-         
-                }
     }
 
     private void verTotal() {
@@ -2470,18 +2502,21 @@ public class Tpv extends javax.swing.JFrame {
 
 
     private void adCli(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adCli
+       
         int ultPos = arrayModelos.size();
         arrayModelos.add(new DefaultTableModel(new Object[][]{},
                 new String[]{
                     "Cod", "Producto", "Cantidad", "Precio", "Total"
                 }));
-
+        
         jTable1.setModel(arrayModelos.get(ultPos));
         lblTotal.setText("0.00 €");
         //System.out.println(arrayModelos.size()+""+ultPos);
+        cantCli();
     }//GEN-LAST:event_adCli
 
     private void mAtras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAtras
+       
         int am = arrayModelos.size();
         for (int i = 0; i < am; i++) {
             try {
@@ -2494,10 +2529,11 @@ public class Tpv extends javax.swing.JFrame {
             } catch (Exception e) {
             }
         }
-
+        cantCli();
     }//GEN-LAST:event_mAtras
 
     private void mAlante(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAlante
+       
         int am = arrayModelos.size();
         int x = 0;
         for (int i = 0; i < am; i++) {
@@ -2517,6 +2553,7 @@ public class Tpv extends javax.swing.JFrame {
         } catch (Exception e) {
 
         }
+        cantCli();
      }//GEN-LAST:event_mAlante
 
     private void btnMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMCActionPerformed
@@ -2651,14 +2688,14 @@ public class Tpv extends javax.swing.JFrame {
                     if (lblTotal.getText().equals("0.00 €")) {
                         arrayModelos.remove(m);
                     } else {
-                        if(verCantidad()){
-                        restarCantidad();
-                        crearFactura();
-                        crearOperacionesF();
+                        if (verCantidad()) {
+                            restarCantidad();
+                            crearFactura();
+                            crearOperacionesF();
 
-                        arrayModelos.remove(m);
-                        }else{
-                            javax.swing.JOptionPane.showMessageDialog(this, "Cantidad de producto no valida ", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
+                            arrayModelos.remove(m);
+                        } else {
+                            javax.swing.JOptionPane.showMessageDialog(this, "Cantidad de "+nombreEx+" no valida ", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
                         }
                     }
                 }
@@ -2680,12 +2717,16 @@ public class Tpv extends javax.swing.JFrame {
             }
 
         }
-        
+
         mSub(evt);
+        cantCli();
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     private void btnPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalActionPerformed
         try {
+            Productos.setVisible(false);
+            Operaciones.setVisible(false);
+            Opciones.setVisible(false);
             Personal.setVisible(true);
             String q = "SELECT * FROM Personal";
             java.sql.Statement stF = JDBC.crearSentenciaF(conexion, false);
@@ -2714,10 +2755,16 @@ public class Tpv extends javax.swing.JFrame {
     }
 
     private void btnOperacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOperacionesActionPerformed
+        Productos.setVisible(false);
+        Personal.setVisible(false);
+        Opciones.setVisible(false);
         Operaciones.setVisible(true);
     }//GEN-LAST:event_btnOperacionesActionPerformed
 
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
+        Operaciones.setVisible(false);
+        Personal.setVisible(false);
+        Opciones.setVisible(false);
         Productos.setVisible(true);
     }//GEN-LAST:event_btnProductosActionPerformed
 
@@ -2995,6 +3042,9 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPeliminarActionPerformed
 
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
+        Productos.setVisible(false);
+        Operaciones.setVisible(false);
+        Personal.setVisible(false);
         Opciones.setVisible(true);
         InitOpciones();
 
@@ -3022,7 +3072,7 @@ public class Tpv extends javax.swing.JFrame {
             String q = "UPDATE Opciones SET IVA =" + txfIVA.getText().replace(",", ".") + " , Cambio = " + txfCambio.getText().replace(",", ".") + " WHERE Id=1;";
             iva = Double.parseDouble(txfIVA.getText().replace(",", "."));
             cambio = Double.parseDouble(txfCambio.getText().replace(",", "."));
-            System.out.println(iva +"   "+cambio);
+            System.out.println(iva + "   " + cambio);
             st.executeUpdate(q);
             btnOpcionesActionPerformed(evt);
         } catch (SQLException ex) {
@@ -3031,23 +3081,23 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirTurnoActionPerformed
-        if(Tcerrado == true){
-        if (turno == false) {
-            turno = true;
-        } else {
-            turno = false;
-        }
+        if (Tcerrado == true) {
+            if (turno == false) {
+                turno = true;
+            } else {
+                turno = false;
+            }
 
-        if (turno == false) {
-            lblTurno.setText("Turno de Mañana");
-        } else {
-            lblTurno.setText("Turno de Tarde");
-        }
+            if (turno == false) {
+                lblTurno.setText("Turno de Mañana");
+            } else {
+                lblTurno.setText("Turno de Tarde");
+            }
 
-        c = new CierreTurno(cambio, turno);
-        Tcerrado = false;
-        }else{
-        javax.swing.JOptionPane.showMessageDialog(Opciones, "Ha de Cerrar el turno para abrir uno nuevo", "ERROR", javax.swing.JOptionPane.PLAIN_MESSAGE);
+            c = new CierreTurno(cambio, turno);
+            Tcerrado = false;
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(Opciones, "Ha de Cerrar el turno para abrir uno nuevo", "ERROR", javax.swing.JOptionPane.PLAIN_MESSAGE);
         }
     }//GEN-LAST:event_btnAbrirTurnoActionPerformed
 
@@ -3061,17 +3111,17 @@ public class Tpv extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExit1ActionPerformed
 
     private void btnCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarTurnoActionPerformed
-        DecimalFormat df = new DecimalFormat ("0.00");
-        if(!lblTurno.getText().equals("") ){
-            int op =javax.swing.JOptionPane.showConfirmDialog(Opciones, "Desea cerrar el turno", "Alerta", javax.swing.JOptionPane.YES_NO_OPTION);
-            if(op==0){
-        Cierre.setVisible(true);
-        lblCTurno.setText("TURNO DE  :  "+c.getTurno());
-        lblCOp.setText("NUMERO DE OPERACIONES  :  "+c.getOperaciones());
-        lblCCaja.setText( "TOTAL CAJA  :  "+df.format(c.totalCaja())+" €");
-        lblCTotal.setText( df.format(c.getTotal())+" €");
-        lblCCambio.setText( "CAMBIO  :  "+df.format(c.getCambio())+" €");
-        Tcerrado = true;
+        DecimalFormat df = new DecimalFormat("0.00");
+        if (!lblTurno.getText().equals("")) {
+            int op = javax.swing.JOptionPane.showConfirmDialog(Opciones, "Desea cerrar el turno", "Alerta", javax.swing.JOptionPane.YES_NO_OPTION);
+            if (op == 0) {
+                Cierre.setVisible(true);
+                lblCTurno.setText("TURNO DE  :  " + c.getTurno());
+                lblCOp.setText("NUMERO DE OPERACIONES  :  " + c.getOperaciones());
+                lblCCaja.setText("TOTAL CAJA  :  " + df.format(c.totalCaja()) + " €");
+                lblCTotal.setText(df.format(c.getTotal()) + " €");
+                lblCCambio.setText("CAMBIO  :  " + df.format(c.getCambio()) + " €");
+                Tcerrado = true;
             }
         }
     }//GEN-LAST:event_btnCerrarTurnoActionPerformed
@@ -3110,46 +3160,49 @@ public class Tpv extends javax.swing.JFrame {
     }
 
     private boolean verCantidad() {
-    boolean cant = true;
-    int canti = 4;
-        for(int f = 0; f<jTable1.getModel().getRowCount(); f++){
-          
+        boolean cant = true;
+        int canti = 4;
+        for (int f = 0; f < jTable1.getModel().getRowCount(); f++) {
+
             ResultSet rsC;
-            int idP = Integer.parseInt(jTable1.getValueAt(f, 0)+"");
-            int cP = Integer.parseInt(jTable1.getValueAt(f, 2)+"");
-            String qC = "SELECT * FROM producto WHERE codigo = "+idP+";";
+            int idP = Integer.parseInt(jTable1.getValueAt(f, 0) + "");
+            int cP = Integer.parseInt(jTable1.getValueAt(f, 2) + "");
+            String qC = "SELECT * FROM producto WHERE codigo = " + idP + ";";
             System.out.println(qC);
             rsC = JDBC.crearResultado(st, qC);
-        try {
-            while(rsC.next()){
-            canti =Integer.parseInt(rsC.getString("cantidad").toString());
+            try {
+                while (rsC.next()) {
+                    canti = Integer.parseInt(rsC.getString("cantidad").toString());
+                    if (canti < cP) {
+                        cant = false;
+                     nombreEx = rsC.getString("nombre").toString();
+                    } else {
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
-        }
             System.out.println(canti);
-            if(canti<cP){
-                cant= false;
-            }else{}
-    }
+
+        }
         System.out.println(cant);
         return cant;
     }
-    
-    private void restarCantidad(){
-        for(int f = 0; f<jTable1.getModel().getRowCount(); f++){
-          
-            int idP = Integer.parseInt(jTable1.getValueAt(f, 0)+"");
-            int cP = Integer.parseInt(jTable1.getValueAt(f, 2)+"");
-            
-            String q = "UPDATE producto SET cantidad = cantidad-" +cP +  " WHERE codigo =" + idP+ " AND cantidad>="+cP+";";
+
+    private void restarCantidad() {
+        for (int f = 0; f < jTable1.getModel().getRowCount(); f++) {
+
+            int idP = Integer.parseInt(jTable1.getValueAt(f, 0) + "");
+            int cP = Integer.parseInt(jTable1.getValueAt(f, 2) + "");
+
+            String q = "UPDATE producto SET cantidad = cantidad-" + cP + " WHERE codigo =" + idP + " AND cantidad>=" + cP + ";";
             rs = JDBC.crearResultado(st, q);
-               
+
         }
     }
-    
+
     private void crearOperacionesF() {
-        
+
         String q = "SELECT c_factura FROM factura";
         java.sql.ResultSet rs = JDBC.crearResultado(st, q);
 
@@ -3345,6 +3398,7 @@ public class Tpv extends javax.swing.JFrame {
     private javax.swing.JLabel lblFac;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblNumP;
     private javax.swing.JLabel lblSTotal;
     private javax.swing.JLabel lblSTotal1;
@@ -3406,5 +3460,6 @@ public class Tpv extends javax.swing.JFrame {
 
     private CierreTurno c;
     private boolean Tcerrado = true;
-    
+
+    String nombreEx="";
 }
