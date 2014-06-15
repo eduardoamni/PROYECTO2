@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Tpv extends javax.swing.JFrame {
 
+    //CONTROL DEL RELOJ GENERAL
     public class Liste implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             GregorianCalendar c = new GregorianCalendar();
@@ -53,8 +53,9 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    
+    //CONTROL DE LOS BOTONES MC Y MP 
     public class timeMC implements ActionListener {
-
         @Override
         public void actionPerformed(ActionEvent ae) {
             tempMC.start();
@@ -88,11 +89,15 @@ public class Tpv extends javax.swing.JFrame {
         conexion = JDBC.conectarBD();
         hora = new javax.swing.Timer(10, new Liste());
         hora.start();
+        //ACTUALIZA EL CHECK LIST DE CAMAREROS
         verCamareros();
+        //VISUALIZA E INICIALIZA LA PANTALLA DE OPCIONES
         Opciones.setAlwaysOnTop(true);
         Opciones.setVisible(true);
         InitOpciones();
+        //VISUALIZA EL LBL DE CANTIDAD DE CLIENTES
         cantCli();
+        jTable1.setRowHeight(26);
     }
 
     /**
@@ -697,12 +702,10 @@ public class Tpv extends javax.swing.JFrame {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rbtTarde)
-                                .addComponent(rbtManana)
-                                .addComponent(rbtTodos)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnVer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(rbtTarde)
+                            .addComponent(rbtManana)
+                            .addComponent(rbtTodos)
+                            .addComponent(btnVer)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(cbxDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(cbxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -813,13 +816,14 @@ public class Tpv extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tProd.setIntercellSpacing(new java.awt.Dimension(2, 2));
         tProd.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane4.setViewportView(tProd);
 
@@ -2300,6 +2304,7 @@ public class Tpv extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //VISUALIZA EL LBL DE CANTIDAD DE CLIENTES
     private void cantCli() {
         int p = 0;
         int t = 0;
@@ -2310,16 +2315,16 @@ public class Tpv extends javax.swing.JFrame {
             }
         }
         t = arrayModelos.size();
-        
         if(arrayModelos.size()==0){
         p = 0;
         }else{
         p = p+1;
         }
-        
         lblModelo.setText(p+" /"+t);
     }
     
+    
+    //ACTUALIZA EL CHECK LIST DE CAMAREROS
     private void verCamareros() {
         cbxCamarero.removeAllItems();
         st = JDBC.crearSentencia(conexion);
@@ -2332,17 +2337,18 @@ public class Tpv extends javax.swing.JFrame {
             Logger.getLogger(Tpv.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    //FONDO EN AZUL
     private void fondoAzul(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoAzul
         JButton boton = (JButton) evt.getSource();
         boton.setBackground(new java.awt.Color(74, 129, 205));
     }//GEN-LAST:event_fondoAzul
-
+    //FONDO EN MARRON
     private void fondoNormal(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fondoNormal
         JButton boton = (JButton) evt.getSource();
         boton.setBackground(new java.awt.Color(36, 29, 29));
     }//GEN-LAST:event_fondoNormal
 
+    //VISUALIZA EL SUBMENU DE PRODUCTOS DEPENDIENDO DEL TIPO ELEGIDO
     private void mSub(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mSub
 
         panSubAlimentos.removeAll();
@@ -2422,9 +2428,9 @@ public class Tpv extends javax.swing.JFrame {
                     btnSMnu[dBotones].setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
                 }
                 btnSMnu[dBotones].setForeground(new java.awt.Color(204, 204, 204));
-                //construimos los objetos productos
+                //CONSTRUIMOS LOS OBJETOS PRODUCTOS
                 aProd[dBotones] = new Productos(rs.getInt("codigo"), btnSMnu[dBotones].getText(), rs.getString("tipo"), cantidad, rs.getDouble("precio"));
-                //EVENTO
+                //EVENTO DE CADA BOTON
                 btnSMnu[dBotones].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         evtBoton(evt);
@@ -2435,6 +2441,7 @@ public class Tpv extends javax.swing.JFrame {
                 hB++;
                 dBotones++;
             }
+            //SACAMOS EL SCROLLBAR EN CASO DE NECESITARLO
             spanSubAlimentos.getVerticalScrollBar().setSize(20, Integer.MAX_VALUE);
             panSubAlimentos.setPreferredSize(new Dimension(0, altura));
             rs.close();
@@ -2443,6 +2450,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_mSub
 
+    //EVENTO DE CADA BOTON DEL SUBMENU
     private void evtBoton(java.awt.event.ActionEvent evt) {
         if (!lblTurno.getText().equals("")) {
             if (arrayModelos.size() > 0) {
@@ -2458,6 +2466,7 @@ public class Tpv extends javax.swing.JFrame {
                             cant = (Integer) Integer.parseInt(m.getValueAt(n, 2).toString());
 
                             //System.out.println(cant);
+                            //SI EL PRODUCTO EXISTE EN LA LISTA SE SUMA 1 A LA CANTIDAD
                             if ((aProd[i].getCod() + "").equals(nombre)) {
                                 cant += 1;
                                 m.setValueAt(cant, n, 2);
@@ -2484,6 +2493,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    //EVENTO PARA VER EL TOTAL EN EL LBLTOTAL
     private void verTotal() {
         DecimalFormat df = new DecimalFormat("0.00");
 
@@ -2500,7 +2510,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
-
+    //EVENTO PARA AÑADIR UN CLIENTE NUEVO
     private void adCli(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adCli
        
         int ultPos = arrayModelos.size();
@@ -2515,6 +2525,7 @@ public class Tpv extends javax.swing.JFrame {
         cantCli();
     }//GEN-LAST:event_adCli
 
+        //ARRAY DE MODELOS 1 POSICION ATRAS
     private void mAtras(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAtras
        
         int am = arrayModelos.size();
@@ -2531,7 +2542,8 @@ public class Tpv extends javax.swing.JFrame {
         }
         cantCli();
     }//GEN-LAST:event_mAtras
-
+ 
+//ARRAY DE MODELOS 1 POSICION ADELANTE
     private void mAlante(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mAlante
        
         int am = arrayModelos.size();
@@ -2556,6 +2568,7 @@ public class Tpv extends javax.swing.JFrame {
         cantCli();
      }//GEN-LAST:event_mAlante
 
+    //BOTON PARA MODIFICAR CANTIDAD
     private void btnMCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMCActionPerformed
         if (ultimoC == false && ultimoP == false) {
             btnMC.setBackground(Color.green);
@@ -2565,20 +2578,23 @@ public class Tpv extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnMCActionPerformed
-
+    //BOTON PARA INICIAR EL TEMPORIZADOR DE MC Y MP
     private void tempoMC() {
         tempMC = new javax.swing.Timer(1000, new timeMC());
         tempMC.start();
     }
 
+    //PANEL DE NUMEROS Y .
     private void numero(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numero
         JButton boton = (JButton) evt.getSource();
 
         if (jTable1.getSelectedRow() != -1) {
+            //SI ESTA PULSADO MC
             if (ultimoC) {
-
+                //CONTROLAMOS EL 0
                 if (boton.getText().equals("0") && cCero == false) {
                     valor = "";
+                //DESABILITAMOS EL USO DEL PUNTO
                 } else if (boton.getText().equals(".")) {
                 } else {
                     valor = valor + boton.getText();
@@ -2598,13 +2614,15 @@ public class Tpv extends javax.swing.JFrame {
 
                 } catch (Exception ex) {
                 }
+             //SI ESTA PULSADO MP
             } else if (ultimoP) {
-
+                //CONTROLAMOS EL PUNTO
                 if (boton.getText().equals(".")) {
                     String valor1 = jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 3).toString();
                     if (valor1.contains(".") == false && !valor1.equals("")) {
                         valor = valor + ".";
                     }
+                    //CONTROLAMOS EL 0
                 } else if (boton.getText().equals("0") && valor.equals("0")) {
                     valor = "0";
                 } else {
@@ -2626,6 +2644,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_numero
 
+    //BOTON PARA MODIFICAR PRECIO
     private void btnMPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMPActionPerformed
         if (ultimoP == false && ultimoC == false) {
             btnMP.setBackground(Color.green);
@@ -2639,6 +2658,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMPActionPerformed
 
+   // BOTON PARA ELIMINAR UN PRODUCTO DE LA LISTA
     private void eliminar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminar
         try {
             ((DefaultTableModel) jTable1.getModel()).removeRow(jTable1.getSelectedRow());
@@ -2648,6 +2668,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_eliminar
 
+   //BOTON PARA SACAR TICKET
     private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
         javax.swing.table.DefaultTableModel m = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         double totales = 0.00;
@@ -2674,12 +2695,13 @@ public class Tpv extends javax.swing.JFrame {
             }
             System.out.println("\n");
         }
-        System.out.printf("%-23s %-5s %6.2f %10.2f € \n", "", "IVA", iva, (totales * iva) / 100);
+        System.out.printf("%-21s %-5s %6.2f %1s %9.2f € \n", "", "IVA", iva, "%",(totales * iva) / 100);
         System.out.println("                              ----------------");
         System.out.printf("%-23s %2s %9s %10.2f € \n", "", "", "TOTAL", totales);
         System.out.println("====================================================");
     }//GEN-LAST:event_btnTicketActionPerformed
 
+    //BOTON PARA COBRAR O ELIMINAR MODELO
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         DefaultTableModel mActu = (DefaultTableModel) jTable1.getModel();
         try {
@@ -2692,7 +2714,6 @@ public class Tpv extends javax.swing.JFrame {
                             restarCantidad();
                             crearFactura();
                             crearOperacionesF();
-
                             arrayModelos.remove(m);
                         } else {
                             javax.swing.JOptionPane.showMessageDialog(this, "Cantidad de "+nombreEx+" no valida ", "Error", javax.swing.JOptionPane.PLAIN_MESSAGE);
@@ -2715,13 +2736,12 @@ public class Tpv extends javax.swing.JFrame {
                 verTotal();
             } catch (Exception exx) {
             }
-
         }
-
         mSub(evt);
         cantCli();
     }//GEN-LAST:event_btnCobrarActionPerformed
 
+    //ACCEDER A LA PANTALLA DE PERSONAL
     private void btnPersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPersonalActionPerformed
         try {
             Productos.setVisible(false);
@@ -2729,6 +2749,7 @@ public class Tpv extends javax.swing.JFrame {
             Opciones.setVisible(false);
             Personal.setVisible(true);
             String q = "SELECT * FROM Personal";
+            //STATEMENT CON FOWARD
             java.sql.Statement stF = JDBC.crearSentenciaF(conexion, false);
             rsP = JDBC.crearResultado(stF, q);
             rsP.next();
@@ -2741,7 +2762,7 @@ public class Tpv extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnPersonalActionPerformed
-
+    //METODO PARA ESCRIBIR LOS DATOS
     private void escribirP() throws Exception {
         try {
             txfDNI.setText(rsP.getString("dni_c"));
@@ -2753,7 +2774,7 @@ public class Tpv extends javax.swing.JFrame {
         } catch (Exception ex) {
         }
     }
-
+    //VER PANTALLA DE OPERACIONES
     private void btnOperacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOperacionesActionPerformed
         Productos.setVisible(false);
         Personal.setVisible(false);
@@ -2761,6 +2782,7 @@ public class Tpv extends javax.swing.JFrame {
         Operaciones.setVisible(true);
     }//GEN-LAST:event_btnOperacionesActionPerformed
 
+    //VER PANTALLA DE PRODUCTOS
     private void btnProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductosActionPerformed
         Operaciones.setVisible(false);
         Personal.setVisible(false);
@@ -2768,6 +2790,7 @@ public class Tpv extends javax.swing.JFrame {
         Productos.setVisible(true);
     }//GEN-LAST:event_btnProductosActionPerformed
 
+     //SALIR A PRINCIPAL
     private void btnMainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMainActionPerformed
         Productos.setVisible(false);
         Operaciones.setVisible(false);
@@ -2777,6 +2800,7 @@ public class Tpv extends javax.swing.JFrame {
         mSub(evt);
     }//GEN-LAST:event_btnMainActionPerformed
 
+    //VER EMPLEADO ANTERIOR
     private void btnPatrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatrasActionPerformed
         try {
             if (rsP.previous()) {
@@ -2792,6 +2816,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPatrasActionPerformed
 
+    //VER EMPLEADO SIGUIENTE
     private void btnPalanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPalanteActionPerformed
         try {
             if (rsP.next()) {
@@ -2812,6 +2837,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPalanteActionPerformed
 
+    //VER FACTURA AL DETALLE DE LA TABLA DE OPERACIONES
     private void tableOpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableOpMouseClicked
         try {
             int fila = (tableOp.getSelectedRow());
@@ -2843,6 +2869,7 @@ public class Tpv extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tableOpMouseClicked
 
+    //MUESTRA EL TOTAL DE OPERACIONES EN EL LABEL TOTALOPERACIONES
     private void totalOperaciones() {
         double total = 0;
         for (int i = 0; i < tableOp.getModel().getRowCount(); i++) {
@@ -2852,6 +2879,7 @@ public class Tpv extends javax.swing.JFrame {
         totalOperaciones.setText(df.format(total) + " €");
     }
 
+    //MOSTRAR LAS FACTURAS SEGUN DIA Y TURNO EN LA TABLA TABLEOP
     private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
         String seleccionarT = "";
         javax.swing.table.DefaultTableModel tb = (javax.swing.table.DefaultTableModel) tableOp.getModel();
@@ -2884,10 +2912,12 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnVerActionPerformed
 
+    //SALIR DE LA FACTURA
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         Factura.setVisible(false);
     }//GEN-LAST:event_btnExitActionPerformed
 
+    //VER PRODUCTOS EN LA TABLA TPROD
     private void elecTipo(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elecTipo
         javax.swing.table.DefaultTableModel m = (javax.swing.table.DefaultTableModel) tProd.getModel();
         try {
@@ -2915,6 +2945,7 @@ public class Tpv extends javax.swing.JFrame {
             java.sql.ResultSet rs = JDBC.crearResultado(st, q);
 
             m.setRowCount(0);
+            tProd.setRowHeight(30);
             while (rs.next()) {
                 String[] r = {rs.getString(1), rs.getString(2), rs.getString(4), rs.getString(5)};
                 m.addRow(r);
@@ -2925,18 +2956,22 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_elecTipo
 
+    //RESTRINGIR EL USO A NUMEROS
     private void txfCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCodigoKeyReleased
         comprobarInt(txfCodigo);
     }//GEN-LAST:event_txfCodigoKeyReleased
-
+ 
+    //VISUALIZAR LA PANTALLA PAR CREAR PRODUCTO
     private void btnPNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPNuevoActionPerformed
         nProducto.setVisible(true);
     }//GEN-LAST:event_btnPNuevoActionPerformed
-
+    
+    //RESTRINGIR EL USO A NUMEROS ENTEROS 
     private void txfCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfCantidadKeyReleased
         comprobarInt(txfCantidad);
     }//GEN-LAST:event_txfCantidadKeyReleased
 
+    //RESTRINGIR EL USO A NUMEROS ENTEROS Y DECIMALES
     private void txfPrecioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txfPrecioKeyReleased
         try {
             double a = Double.parseDouble(txfPrecio.getText());
@@ -2948,6 +2983,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txfPrecioKeyReleased
 
+    //CREAR UN NUEVO PRODUCTO
     private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
         try {
             int cod = Integer.parseInt(txfCodigo.getText());
@@ -2972,6 +3008,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnAnadirActionPerformed
 
+    //BOTON PARA ELIMINAR UN PRODUCTO
     private void btnPEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPEliminarActionPerformed
         try {
             String q = "DELETE * FROM producto WHERE codigo =" + tProd.getValueAt(tProd.getSelectedRow(), 0) + ";";
@@ -2982,10 +3019,12 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPEliminarActionPerformed
 
+    //SALIR DE NUEVO PRODUCTO
     private void btnXActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXActionPerformed
         nProducto.setVisible(false);
     }//GEN-LAST:event_btnXActionPerformed
 
+    //MODIFICAR PRECIO Y CANTIDAD DE STOCK DE  UN PRODUCTO 
     private void btnPCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCantidadActionPerformed
         if (arrayModelos.size() == 0) {
             try {
@@ -3013,6 +3052,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPCantidadActionPerformed
 
+    //NUEVO EMPLEADO
     private void btnPnuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPnuevoActionPerformed
 
         try {
@@ -3029,6 +3069,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPnuevoActionPerformed
 
+    //ELIMINAR EL EMPLEADO SELECCIONADO
     private void btnPeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliminarActionPerformed
         try {
             rsP.deleteRow();
@@ -3041,6 +3082,7 @@ public class Tpv extends javax.swing.JFrame {
         btnPersonalActionPerformed(evt);
     }//GEN-LAST:event_btnPeliminarActionPerformed
 
+    //VER VENTANA DE OPACIONES
     private void btnOpcionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpcionesActionPerformed
         Productos.setVisible(false);
         Operaciones.setVisible(false);
@@ -3050,6 +3092,8 @@ public class Tpv extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnOpcionesActionPerformed
 
+    //INICIALIZAR LAS VARIABLES IVA Y CAMBIO
+    // UTILIZO LA BASE DE DATOS PARA TENER EL CONTROL SOBRE ESTAS
     private void InitOpciones() {
 
         String q = "SELECT * FROM Opciones;";
@@ -3067,6 +3111,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    //MODIFICAR EL IVA Y EL CAMBIO
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         try {
             String q = "UPDATE Opciones SET IVA =" + txfIVA.getText().replace(",", ".") + " , Cambio = " + txfCambio.getText().replace(",", ".") + " WHERE Id=1;";
@@ -3080,6 +3125,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    //BOTON PARA ABRIR TURNO SIEMPRE QUE NO HAYA UNO ABIERTO
     private void btnAbrirTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirTurnoActionPerformed
         if (Tcerrado == true) {
             if (turno == false) {
@@ -3105,11 +3151,13 @@ public class Tpv extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbtTodosActionPerformed
 
+    //BOTON PARA SALIR DE LA VENTANA DE CIERRE
     private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
         Cierre.setVisible(false);
         lblTurno.setText("");
     }//GEN-LAST:event_btnExit1ActionPerformed
 
+    //GENERAR CIERRE
     private void btnCerrarTurnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarTurnoActionPerformed
         DecimalFormat df = new DecimalFormat("0.00");
         if (!lblTurno.getText().equals("")) {
@@ -3126,6 +3174,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCerrarTurnoActionPerformed
 
+    //METODO PARA COMPROBAR ENTEROS
     private void comprobarInt(javax.swing.JTextField tf) {
         try {
             int a = Integer.parseInt(tf.getText());
@@ -3136,7 +3185,8 @@ public class Tpv extends javax.swing.JFrame {
             }
         }
     }
-
+    
+    //METODO PARA CREAR UNA FACTURA
     private void crearFactura() {
         GregorianCalendar h = new GregorianCalendar();
         SimpleDateFormat fF = new SimpleDateFormat("dd/MM/YYYY");
@@ -3147,6 +3197,7 @@ public class Tpv extends javax.swing.JFrame {
         //System.out.println("INSERT INTO factura(fecha, camarero, total) VALUES ('"+lblHora.getText()+"', '"+cbxCamarero.getModel().getSelectedItem().toString()+"', '"+lblTotal.getText().substring(0, lblTotal.getText().length()-1)+"');");
 
         //Cierre Turno
+        //EN EL OBETO DE CIERRE AÑADIMOS LAS OPERACIONES Y LOS TOTALES
         c.setOperaciones();
         c.setTotal(Double.parseDouble(lblTotal.getText().substring(0, lblTotal.getText().length() - 1)));
 
@@ -3159,6 +3210,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    //CONTROLA QUE LA CANTIDAD DE CADA PRODUCTO EN LA TABLA NO EXCEDA DEL TOTAL DEL STOCK
     private boolean verCantidad() {
         boolean cant = true;
         int canti = 4;
@@ -3189,6 +3241,7 @@ public class Tpv extends javax.swing.JFrame {
         return cant;
     }
 
+    //RESTA LA CANTIDAD DE PRODUCTO VENDIDA DEL STOCK
     private void restarCantidad() {
         for (int f = 0; f < jTable1.getModel().getRowCount(); f++) {
 
@@ -3201,6 +3254,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    //CREA LAS OPERACIONES DE LA ULTIMA FACTURA EN LA BDD
     private void crearOperacionesF() {
 
         String q = "SELECT c_factura FROM factura";
@@ -3230,6 +3284,7 @@ public class Tpv extends javax.swing.JFrame {
 
     }
 
+       //ELIMINA LAS FILAS DE LA TABLA JTABLE1
     private void borrarFilas() {
         DefaultTableModel m = (DefaultTableModel) jTable1.getModel();
         while (m.getRowCount() != 0) {
@@ -3237,6 +3292,7 @@ public class Tpv extends javax.swing.JFrame {
         }
     }
 
+    //MUESTRA EL ESTADO DEL BOTON COBRAR DEPENDIENDO DE SI HAY CANTIDAD DE PRODUCTO O NO
     private void eliCobrar() {
         if (lblTotal.getText().equals("0.00 €")) {
             btnCobrar.setForeground(Color.red);
